@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# SPDX-FileComment: Fish! Mastodon bot
+# SPDX-FileCopyrightText: Copyright (C) 2023 Ryan Finnie
+# SPDX-License-Identifier: MPL-2.0
+
 import json
 import logging
 import os
