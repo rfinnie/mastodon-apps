@@ -85,13 +85,20 @@ class Fish:
                 k, v = line.split(": ", 1)
                 message[k] = v
                 continue
-            self.process_message(message)
+            try:
+                self.process_message(message)
+            except Exception:
+                logging.exception("Unexpected exception processing message")
             message = {}
 
     def process_message(self, message):
         if message.get("event") != "notification":
             return
-        data = json.loads(message.get("data", {}))
+        try:
+            data = json.loads(message.get("data"))
+        except (TypeError, json.decoder.JSONDecodeError):
+            logging.exception("Exception decoding message data")
+            return
         if data.get("type") == "mention":
             self.process_mention(data)
 
