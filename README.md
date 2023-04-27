@@ -1,3 +1,5 @@
-# Fish!
+# Mastodon bots
 
-This is the code for the [Fish! bot](https://botsin.space/@fish) on botsin.space.
+A collection of personal Mastodon bots.
+
+* [Fish!](https://botsin.space/@fish)

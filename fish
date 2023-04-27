@@ -71,7 +71,7 @@ class Fish:
             )
             r.raise_for_status()
 
-    def go_fishing(self):
+    def stream_notifications(self):
         message = {}
         r = self.session.get(
             "{}/api/v1/streaming/user/notification".format(self.url_base), stream=True
@@ -103,7 +103,11 @@ class Fish:
             self.process_mention(data)
 
     def main(self):
-        logging.basicConfig(level=logging.DEBUG)
+        logging_format = "%(levelname)s:%(name)s:%(message)s"
+        if sys.stderr.isatty():
+            logging_format = "%(asctime)s:" + logging_format
+        logging_level = logging.DEBUG if sys.stderr.isatty() else logging.INFO
+        logging.basicConfig(format=logging_format, level=logging_level)
         with open(os.path.join(self.script_dir, "fish.yaml")) as f:
             self.config = yaml.safe_load(f)
         self.url_base = self.config["url_base"]
@@ -119,7 +123,7 @@ class Fish:
 
         while True:
             try:
-                self.go_fishing()
+                self.stream_notifications()
             except Exception:
                 logging.exception("Unexpected exception")
             time.sleep(30)
