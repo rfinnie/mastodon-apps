@@ -1,0 +1,189 @@
+#!/usr/bin/env python3
+
+# SPDX-FileComment: Printer Mastodon bot
+# SPDX-FileCopyrightText: Copyright (C) 2023 Ryan Finnie
+# SPDX-License-Identifier: MPL-2.0
+
+import json
+import logging
+import os
+import socket
+import sys
+import textwrap
+import time
+
+from bs4 import BeautifulSoup
+import dateutil.parser
+import requests
+from unidecode import unidecode
+import yaml
+
+
+def tobin(data):
+    if not isinstance(data, (list, tuple)):
+        data = [data]
+    out = b""
+    for part in data:
+        if isinstance(part, (bytes, bytearray)):
+            out += part
+        else:
+            out += unidecode(part).encode("ascii", "replace")
+    return out
+
+
+class Printer:
+    session = None
+    me = None
+    config = None
+
+    def __init__(self):
+        self.session = requests.Session()
+        self.script_dir = os.path.dirname(os.path.realpath(__file__))
+
+    def process_mention(self, mention):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((self.config["printer_host"], self.config.get("printer_port", 9100)))
+        sock.send(tobin([b"\x1b!\x38", self.server["title"], b"\x1b!\x00\n"]))
+        sock.send(tobin(b"\n"))
+        sock.send(
+            tobin(
+                [
+                    "From: ",
+                    b"\x1b!\x08",
+                    mention["status"]["account"]["display_name"],
+                    b"\x1b!\x00",
+                    " (@{})\n".format(mention["status"]["account"]["acct"]),
+                ]
+            )
+        )
+        for other_mention in mention["status"]["mentions"]:
+            if other_mention["acct"] == self.me["acct"]:
+                continue
+            if other_mention["acct"] == mention["status"]["account"]["acct"]:
+                continue
+            tosend = [
+                "Mentions: ",
+                b"\x1b!\x08",
+                "@" + other_mention["acct"],
+                b"\x1b!\x00\n",
+            ]
+            if other_mention["id"] == mention["status"]["in_reply_to_account_id"]:
+                tosend.append(" (reply)")
+            sock.send(tobin(tosend))
+        sock.send(
+            tobin(
+                "Date: {}\n".format(
+                    dateutil.parser.parse(mention["status"]["created_at"]).strftime(
+                        "%c"
+                    )
+                )
+            )
+        )
+        if mention["status"]["spoiler_text"]:
+            sock.send(tobin("Spoiler: " + mention["status"]["spoiler_text"]))
+        sock.send(tobin(b"\n"))
+        content = mention["status"]["content"]
+        content = content.replace("<br/>", "___BR___")
+        content = content.replace("<br />", "___BR___")
+        bs = BeautifulSoup(content, features="lxml")
+        for para in bs.find_all("p"):
+            para = para.get_text().strip()
+            logging.debug(repr(para))
+            lines = []
+            for line in para.split("___BR___"):
+                lines.extend(textwrap.wrap(line, width=48))
+            lines.append("")
+            lines = lines[:50]
+            for line in lines:
+                logging.debug(repr(line))
+                sock.send(tobin(line + "\n"))
+                if line.startswith("https://"):
+                    sock.send(self.get_qrcode_bin(line.strip()))
+        sock.send(tobin(b"\x1b@"))  # Reset
+        sock.send(tobin(b"\x1dVB\x96"))  # Paper cut, 5 lines bottom margin
+        sock.close()
+        if not mention["status"]["in_reply_to_id"]:
+            r = self.session.post(
+                "{}/api/v1/statuses/{}/favourite".format(
+                    self.url_base, mention["status"]["id"]
+                )
+            )
+            r.raise_for_status()
+
+    def get_qrcode_bin(self, payload):
+        out = (
+            b"\x1d(k\x04\x00\x31\x41\x32\x00"  # QR model 2
+            + b"\x1d(k\x03\x00\x31\x43\x0a"  # QR size 10 dots
+            + b"\x1d(k\x03\x00\x31\x45\x31"  # QR error correction level M (15%)
+        )
+        a = tobin(payload)
+        store_len = len(a) + 3
+        pl = store_len % 256
+        ph = int(store_len / 256)
+        out += b"\x1d(k" + bytes([pl, ph]) + b"\x31\x50\x30" + a  # QR store
+        out += b"\x1d(k\x03\x00\x31\x51\x30"  # QR print
+        return out
+
+    def stream_notifications(self):
+        message = {}
+        r = self.session.get(
+            "{}/api/v1/streaming/user/notification".format(self.url_base), stream=True
+        )
+        r.raise_for_status()
+        for line in r.iter_lines(chunk_size=8192, decode_unicode=True):
+            if line.startswith(":"):
+                continue
+            line = line.strip()
+            if line:
+                k, v = line.split(": ", 1)
+                message[k] = v
+                continue
+            try:
+                self.process_message(message)
+            except Exception:
+                logging.exception("Unexpected exception processing message")
+            message = {}
+
+    def process_message(self, message):
+        if message.get("event") != "notification":
+            return
+        try:
+            data = json.loads(message.get("data"))
+        except (TypeError, json.decoder.JSONDecodeError):
+            logging.exception("Exception decoding message data")
+            return
+        if data.get("type") == "mention":
+            self.process_mention(data)
+
+    def main(self):
+        logging_format = "%(levelname)s:%(name)s:%(message)s"
+        if sys.stderr.isatty():
+            logging_format = "%(asctime)s:" + logging_format
+        logging_level = logging.DEBUG if sys.stderr.isatty() else logging.INFO
+        logging.basicConfig(format=logging_format, level=logging_level)
+        with open(os.path.join(self.script_dir, "printer.yaml")) as f:
+            self.config = yaml.safe_load(f)
+        self.url_base = self.config["url_base"]
+        self.session.headers["Authorization"] = "Bearer {}".format(
+            self.config["bearer_token"]
+        )
+
+        r = self.session.get("{}/api/v2/instance".format(self.url_base))
+        r.raise_for_status()
+        self.server = r.json()
+        r = self.session.get(
+            "{}/api/v1/accounts/verify_credentials".format(self.url_base)
+        )
+        r.raise_for_status()
+        self.me = r.json()
+
+        while True:
+            try:
+                self.stream_notifications()
+            except Exception:
+                logging.exception("Unexpected exception")
+            time.sleep(30)
+
+
+if __name__ == "__main__":
+    sys.exit(Printer().main())
