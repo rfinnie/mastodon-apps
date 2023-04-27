@@ -65,10 +65,11 @@ class Printer:
                 "Mentions: ",
                 b"\x1b!\x08",
                 "@" + other_mention["acct"],
-                b"\x1b!\x00\n",
+                b"\x1b!\x00",
             ]
             if other_mention["id"] == mention["status"]["in_reply_to_account_id"]:
                 tosend.append(" (reply)")
+            tosend.append("\n")
             sock.send(tobin(tosend))
         sock.send(
             tobin(
@@ -85,6 +86,7 @@ class Printer:
         content = mention["status"]["content"]
         content = content.replace("<br/>", "___BR___")
         content = content.replace("<br />", "___BR___")
+        content = content.replace("<br>", "___BR___")  # This is terrible
         bs = BeautifulSoup(content, features="lxml")
         for para in bs.find_all("p"):
             para = para.get_text().strip()
