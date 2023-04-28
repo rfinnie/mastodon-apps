@@ -72,12 +72,12 @@ class Fish:
             r.raise_for_status()
 
     def stream_iter_lines(self, r):
-        buf = b''
+        buf = b""
         for buf_in in r.iter_content(chunk_size=8192):
             buf += buf_in
-            if b'\n' not in buf:
+            if b"\n" not in buf:
                 continue
-            raw_lines = buf.split(b'\n')
+            raw_lines = buf.split(b"\n")
             buf = raw_lines[-1]
             for line in [line.decode("UTF-8") for line in raw_lines[:-1]]:
                 yield line
@@ -88,7 +88,7 @@ class Fish:
             "{}/api/v1/streaming/user/notification".format(self.url_base), stream=True
         )
         r.raise_for_status()
-        for line in self.stream_iter_lines(r)
+        for line in self.stream_iter_lines(r):
             if line.startswith(":"):
                 continue
             line = line.strip()

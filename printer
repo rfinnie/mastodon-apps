@@ -42,7 +42,9 @@ class Printer:
 
     def process_mention(self, mention):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((self.config["printer_host"], self.config.get("printer_port", 9100)))
+        sock.connect(
+            (self.config["printer_host"], self.config.get("printer_port", 9100))
+        )
         sock.send(tobin([b"\x1b!\x38", self.server["title"], b"\x1b!\x00\n"]))
         sock.send(tobin(b"\n"))
         sock.send(
@@ -126,12 +128,12 @@ class Printer:
         return out
 
     def stream_iter_lines(self, r):
-        buf = b''
+        buf = b""
         for buf_in in r.iter_content(chunk_size=8192):
             buf += buf_in
-            if b'\n' not in buf:
+            if b"\n" not in buf:
                 continue
-            raw_lines = buf.split(b'\n')
+            raw_lines = buf.split(b"\n")
             buf = raw_lines[-1]
             for line in [line.decode("UTF-8") for line in raw_lines[:-1]]:
                 yield line
