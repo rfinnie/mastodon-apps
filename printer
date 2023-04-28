@@ -83,24 +83,23 @@ class Printer:
         if mention["status"]["spoiler_text"]:
             sock.send(tobin("Spoiler: " + mention["status"]["spoiler_text"]))
         sock.send(tobin(b"\n"))
+        lines = []
         content = mention["status"]["content"]
-        content = content.replace("<br/>", "___BR___")
-        content = content.replace("<br />", "___BR___")
-        content = content.replace("<br>", "___BR___")  # This is terrible
-        bs = BeautifulSoup(content, features="lxml")
-        for para in bs.find_all("p"):
+        soup = BeautifulSoup(content.replace("\n", " "), features="lxml")
+        for br in soup.find_all("br"):
+            br.replace_with("\n")
+        for para in soup.find_all("p"):
             para = para.get_text().strip()
             logging.debug(repr(para))
-            lines = []
-            for line in para.split("___BR___"):
+            for line in para.split("\n"):
                 lines.extend(textwrap.wrap(line, width=48))
             lines.append("")
-            lines = lines[:50]
-            for line in lines:
-                logging.debug(repr(line))
-                sock.send(tobin(line + "\n"))
-                if line.startswith("https://"):
-                    sock.send(self.get_qrcode_bin(line.strip()))
+        lines = lines[:50]
+        for line in lines:
+            logging.debug(repr(line))
+            sock.send(tobin(line + "\n"))
+            if line.startswith("https://"):
+                sock.send(self.get_qrcode_bin(line.strip()))
         sock.send(tobin(b"\x1b@"))  # Reset
         sock.send(tobin(b"\x1dVB\x96"))  # Paper cut, 5 lines bottom margin
         sock.close()
