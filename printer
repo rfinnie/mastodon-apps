@@ -4,6 +4,7 @@
 # SPDX-FileCopyrightText: Copyright (C) 2023 Ryan Finnie
 # SPDX-License-Identifier: MPL-2.0
 
+import io
 import json
 import logging
 import os
@@ -14,6 +15,7 @@ import time
 
 from bs4 import BeautifulSoup
 import dateutil.parser
+from PIL import Image, ImageOps
 import requests
 from unidecode import unidecode
 import yaml
@@ -102,6 +104,21 @@ class Printer:
             sock.send(tobin(line + "\n"))
             if line.startswith("https://"):
                 sock.send(self.get_qrcode_bin(line.strip()))
+
+        for attachment in mention["status"]["media_attachments"][:2]:
+            if attachment["type"] != "image":
+                continue
+            r = self.session.get(attachment["url"])
+            r.raise_for_status()
+            sock.send(self.render_image(io.BytesIO(r.content)))
+            if attachment["description"]:
+                sock.send(tobin(b"\n"))
+                for line in textwrap.wrap(
+                    "Image description: " + attachment["description"], width=48
+                ):
+                    sock.send(tobin(line + "\n"))
+            sock.send(tobin(b"\n"))
+
         sock.send(tobin(b"\x1b@"))  # Reset
         sock.send(tobin(b"\x1dVB\x96"))  # Paper cut, 5 lines bottom margin
         sock.close()
@@ -112,6 +129,25 @@ class Printer:
                 )
             )
             r.raise_for_status()
+
+    def render_image(self, file):
+        im = Image.open(file)
+        if im.width > 256 or im.height > 256:
+            im.thumbnail((256, 256), Image.LANCZOS)
+        bitmap = im.convert("L")  # greyscale
+        bitmap = ImageOps.invert(bitmap).convert("1")  # invert + bitmap
+
+        (width, height) = im.size
+        width_bytes = (int)((width + 7) / 8)
+        header = b"\x1dv0\x03" + bytearray(
+            [
+                width_bytes % 256,
+                width_bytes >> 8,
+                height % 256,
+                height >> 8,
+            ]
+        )
+        return header + bitmap.tobytes()
 
     def get_qrcode_bin(self, payload):
         out = (
