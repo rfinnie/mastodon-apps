@@ -43,50 +43,41 @@ class Printer:
         self.script_dir = os.path.dirname(os.path.realpath(__file__))
 
     def process_mention(self, mention):
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect(
-            (self.config["printer_host"], self.config.get("printer_port", 9100))
-        )
-        sock.send(tobin([b"\x1b!\x38", self.server["title"], b"\x1b!\x00\n"]))
-        sock.send(tobin(b"\n"))
-        sock.send(
-            tobin(
-                [
-                    "From: ",
-                    b"\x1b!\x08",
-                    mention["status"]["account"]["display_name"],
-                    b"\x1b!\x00",
-                    " (@{})\n".format(mention["status"]["account"]["acct"]),
-                ]
-            )
+        out = []
+        out.extend([b"\x1b!\x38", self.server["title"], b"\x1b!\x00\n\n"])
+        out.extend(
+            [
+                "From: ",
+                b"\x1b!\x08",
+                mention["status"]["account"]["display_name"],
+                b"\x1b!\x00",
+                " (@{})\n".format(mention["status"]["account"]["acct"]),
+            ]
         )
         for other_mention in mention["status"]["mentions"]:
             if other_mention["acct"] == self.me["acct"]:
                 continue
             if other_mention["acct"] == mention["status"]["account"]["acct"]:
                 continue
-            tosend = [
-                "Mentions: ",
-                b"\x1b!\x08",
-                "@" + other_mention["acct"],
-                b"\x1b!\x00",
-            ]
+            out.extend(
+                [
+                    "Mentions: ",
+                    b"\x1b!\x08",
+                    "@" + other_mention["acct"],
+                    b"\x1b!\x00",
+                ]
+            )
             if other_mention["id"] == mention["status"]["in_reply_to_account_id"]:
-                tosend.append(" (reply)")
-            tosend.append("\n")
-            sock.send(tobin(tosend))
-        sock.send(
-            tobin(
-                "Date: {}\n".format(
-                    dateutil.parser.parse(mention["status"]["created_at"]).strftime(
-                        "%c"
-                    )
-                )
+                out.append(" (reply)")
+            out.append("\n")
+        out.append(
+            "Date: {}\n".format(
+                dateutil.parser.parse(mention["status"]["created_at"]).strftime("%c")
             )
         )
         if mention["status"]["spoiler_text"]:
-            sock.send(tobin("Spoiler: " + mention["status"]["spoiler_text"]))
-        sock.send(tobin(b"\n"))
+            out.append("Spoiler: " + mention["status"]["spoiler_text"])
+        out.append(b"\n")
         lines = []
         content = mention["status"]["content"]
         soup = BeautifulSoup(content.replace("\n", " "), features="lxml")
@@ -101,27 +92,34 @@ class Printer:
         lines = lines[:50]
         for line in lines:
             logging.debug(repr(line))
-            sock.send(tobin(line + "\n"))
+            out.append(line + "\n")
             if line.startswith("https://"):
-                sock.send(self.get_qrcode_bin(line.strip()))
+                out.append(self.get_qrcode_bin(line.strip()))
 
         for attachment in mention["status"]["media_attachments"][:2]:
             if attachment["type"] != "image":
                 continue
             r = self.session.get(attachment["url"])
             r.raise_for_status()
-            sock.send(self.render_image(io.BytesIO(r.content)))
+            out.append(self.render_image(io.BytesIO(r.content)))
             if attachment["description"]:
-                sock.send(tobin(b"\n"))
+                out.append(b"\n")
                 for line in textwrap.wrap(
                     "Image description: " + attachment["description"], width=48
                 ):
-                    sock.send(tobin(line + "\n"))
-            sock.send(tobin(b"\n"))
+                    out.append(line + "\n")
+            out.append(b"\n")
 
-        sock.send(tobin(b"\x1b@"))  # Reset
-        sock.send(tobin(b"\x1dVB\x96"))  # Paper cut, 5 lines bottom margin
+        out.append(b"\x1b@")  # Reset
+        out.append(b"\x1dVB\x96")  # Paper cut, 5 lines bottom margin
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect(
+            (self.config["printer_host"], self.config.get("printer_port", 9100))
+        )
+        sock.send(tobin(out))
         sock.close()
+
         if not mention["status"]["in_reply_to_id"]:
             r = self.session.post(
                 "{}/api/v1/statuses/{}/favourite".format(
@@ -155,7 +153,7 @@ class Printer:
             + b"\x1d(k\x03\x00\x31\x43\x0a"  # QR size 10 dots
             + b"\x1d(k\x03\x00\x31\x45\x31"  # QR error correction level M (15%)
         )
-        a = tobin(payload)
+        a = payload.encode("UTF-8")
         store_len = len(a) + 3
         pl = store_len % 256
         ph = int(store_len / 256)
