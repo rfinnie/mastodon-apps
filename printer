@@ -5,44 +5,41 @@
 # SPDX-License-Identifier: MPL-2.0
 
 import io
-import json
-import logging
-import os
 import socket
 import sys
 import textwrap
-import time
 
 from bs4 import BeautifulSoup
 import dateutil.parser
 from PIL import Image, ImageOps
-import requests
 from unidecode import unidecode
-import yaml
+
+from lib import BaseMastodon
 
 
-def tobin(data):
-    if not isinstance(data, (list, tuple)):
-        data = [data]
-    out = b""
-    for part in data:
-        if isinstance(part, (bytes, bytearray)):
-            out += part
-        else:
-            out += unidecode(part).encode("ascii", "replace")
-    return out
+class Printer(BaseMastodon):
+    name = "printer"
+    calling_file = __file__
 
-
-class Printer:
-    session = None
-    me = None
-    config = None
-
-    def __init__(self):
-        self.session = requests.Session()
-        self.script_dir = os.path.dirname(os.path.realpath(__file__))
+    def tobin(self, data):
+        if not isinstance(data, (list, tuple)):
+            data = [data]
+        out = b""
+        for part in data:
+            if isinstance(part, (bytes, bytearray)):
+                out += part
+            else:
+                out += unidecode(part).encode("ascii", "replace")
+        return out
 
     def process_mention(self, mention):
+        self.logger.info(
+            "Received mention from {} (@{})".format(
+                mention["status"]["account"]["display_name"],
+                mention["status"]["account"]["acct"],
+            )
+        )
+        self.logger.info("Post: {}".format(mention["status"]["url"]))
         out = []
         out.extend([b"\x1b!\x38", self.server["title"], b"\x1b!\x00\n\n"])
         out.extend(
@@ -85,13 +82,13 @@ class Printer:
             br.replace_with("\n")
         for para in soup.find_all("p"):
             para = para.get_text().strip()
-            logging.debug(repr(para))
+            self.logger.debug(repr(para))
             for line in para.split("\n"):
                 lines.extend(textwrap.wrap(line, width=48))
             lines.append("")
         lines = lines[:50]
         for line in lines:
-            logging.debug(repr(line))
+            self.logger.debug(repr(line))
             out.append(line + "\n")
             if line.startswith("https://"):
                 out.append(self.get_qrcode_bin(line.strip()))
@@ -112,13 +109,19 @@ class Printer:
 
         out.append(b"\x1b@")  # Reset
         out.append(b"\x1dVB\x96")  # Paper cut, 5 lines bottom margin
+        out = self.tobin(out)
 
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect(
-            (self.config["printer_host"], self.config.get("printer_port", 9100))
-        )
-        sock.send(tobin(out))
-        sock.close()
+        if self.config.get("printer_device"):
+            with open(self.config["printer_device"], "wb") as f:
+                f.write(out)
+        else:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.connect(
+                (self.config["printer_host"], self.config.get("printer_port", 9100))
+            )
+            sock.send(out)
+            sock.close()
+        self.logger.info("Print sent to printer, {} bytes".format(len(out)))
 
         if not mention["status"]["in_reply_to_id"]:
             r = self.session.post(
@@ -127,6 +130,7 @@ class Printer:
                 )
             )
             r.raise_for_status()
+            self.logger.info("Favorited {}".format(mention["status"]["url"]))
 
     def render_image(self, file):
         im = Image.open(file)
@@ -160,77 +164,6 @@ class Printer:
         out += b"\x1d(k" + bytes([pl, ph]) + b"\x31\x50\x30" + a  # QR store
         out += b"\x1d(k\x03\x00\x31\x51\x30"  # QR print
         return out
-
-    def stream_iter_lines(self, r):
-        buf = b""
-        for buf_in in r.iter_content(chunk_size=8192):
-            buf += buf_in
-            if b"\n" not in buf:
-                continue
-            raw_lines = buf.split(b"\n")
-            buf = raw_lines[-1]
-            for line in [line.decode("UTF-8") for line in raw_lines[:-1]]:
-                yield line
-
-    def stream_notifications(self):
-        message = {}
-        r = self.session.get(
-            "{}/api/v1/streaming/user/notification".format(self.url_base), stream=True
-        )
-        r.raise_for_status()
-        for line in self.stream_iter_lines(r):
-            if line.startswith(":"):
-                continue
-            line = line.strip()
-            if line:
-                k, v = line.split(": ", 1)
-                message[k] = v
-                continue
-            try:
-                self.process_message(message)
-            except Exception:
-                logging.exception("Unexpected exception processing message")
-            message = {}
-
-    def process_message(self, message):
-        if message.get("event") != "notification":
-            return
-        try:
-            data = json.loads(message.get("data"))
-        except (TypeError, json.decoder.JSONDecodeError):
-            logging.exception("Exception decoding message data")
-            return
-        if data.get("type") == "mention":
-            self.process_mention(data)
-
-    def main(self):
-        logging_format = "%(levelname)s:%(name)s:%(message)s"
-        if sys.stderr.isatty():
-            logging_format = "%(asctime)s:" + logging_format
-        logging_level = logging.DEBUG if sys.stderr.isatty() else logging.INFO
-        logging.basicConfig(format=logging_format, level=logging_level)
-        with open(os.path.join(self.script_dir, "printer.yaml")) as f:
-            self.config = yaml.safe_load(f)
-        self.url_base = self.config["url_base"]
-        self.session.headers["Authorization"] = "Bearer {}".format(
-            self.config["bearer_token"]
-        )
-
-        r = self.session.get("{}/api/v2/instance".format(self.url_base))
-        r.raise_for_status()
-        self.server = r.json()
-        r = self.session.get(
-            "{}/api/v1/accounts/verify_credentials".format(self.url_base)
-        )
-        r.raise_for_status()
-        self.me = r.json()
-
-        while True:
-            try:
-                self.stream_notifications()
-            except Exception:
-                logging.exception("Unexpected exception")
-            time.sleep(30)
 
 
 if __name__ == "__main__":
