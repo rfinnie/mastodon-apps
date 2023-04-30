@@ -29,7 +29,16 @@ class Printer(BaseMastodon):
             if isinstance(part, (bytes, bytearray)):
                 out += part
             else:
-                out += unidecode(part).encode("ascii", "replace")
+                out += self.transliterate(part)
+        return out
+
+    def transliterate(self, string):
+        out = b""
+        for char in string:
+            try:
+                out += char.encode("cp437")
+            except UnicodeEncodeError:
+                out += unidecode(char, "replace").encode("cp437", "replace")
         return out
 
     def process_mention(self, mention):
