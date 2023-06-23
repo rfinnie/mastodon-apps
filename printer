@@ -115,7 +115,8 @@ class Printer(BaseMastodon):
             if line.startswith("https://"):
                 out.append(self.get_qrcode_bin(line.strip()))
 
-        for attachment in status["media_attachments"][:2]:
+        attachment_limit = self.config.get("attachment_limit", 2)
+        for attachment in status["media_attachments"][:attachment_limit]:
             if attachment["type"] != "image":
                 continue
             r = self.session.get(attachment["url"])
