@@ -138,6 +138,8 @@ class BaseMastodon:
         while True:
             try:
                 self.stream_listen()
+            except requests.exceptions.ChunkedEncodingError:
+                self.logger.warning("Received chunked encoding error, resetting")
             except Exception:
                 self.logger.exception("Unexpected exception")
             time.sleep(30)
