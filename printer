@@ -42,28 +42,41 @@ class Printer(BaseMastodon):
         return out
 
     def process_mention(self, mention):
+        if self.config.get("mode", "mentions") != "mentions":
+            return
+        status = mention["status"]
+        self.print_status(status)
+
+    def process_update(self, status):
+        if self.config.get("mode", "mentions") != "updates":
+            return
+        if status["reblog"]:
+            return
+        self.print_status(status)
+
+    def print_status(self, status):
         self.logger.info(
             "Received mention from {} (@{})".format(
-                mention["status"]["account"]["display_name"],
-                mention["status"]["account"]["acct"],
+                status["account"]["display_name"],
+                status["account"]["acct"],
             )
         )
-        self.logger.info("Post: {}".format(mention["status"]["url"]))
+        self.logger.info("Post: {}".format(status["url"]))
         out = []
         out.extend([b"\x1b!\x38", self.server["title"], b"\x1b!\x00\n\n"])
         out.extend(
             [
                 "From: ",
                 b"\x1b!\x08",
-                mention["status"]["account"]["display_name"],
+                status["account"]["display_name"],
                 b"\x1b!\x00",
-                " (@{})\n".format(mention["status"]["account"]["acct"]),
+                " (@{})\n".format(status["account"]["acct"]),
             ]
         )
-        for other_mention in mention["status"]["mentions"]:
+        for other_mention in status["mentions"]:
             if other_mention["acct"] == self.me["acct"]:
                 continue
-            if other_mention["acct"] == mention["status"]["account"]["acct"]:
+            if other_mention["acct"] == status["account"]["acct"]:
                 continue
             out.extend(
                 [
@@ -73,19 +86,19 @@ class Printer(BaseMastodon):
                     b"\x1b!\x00",
                 ]
             )
-            if other_mention["id"] == mention["status"]["in_reply_to_account_id"]:
+            if other_mention["id"] == status["in_reply_to_account_id"]:
                 out.append(" (reply)")
             out.append("\n")
         out.append(
             "Date: {}\n".format(
-                dateutil.parser.parse(mention["status"]["created_at"]).strftime("%c")
+                dateutil.parser.parse(status["created_at"]).strftime("%c")
             )
         )
-        if mention["status"]["spoiler_text"]:
-            out.append("Spoiler: " + mention["status"]["spoiler_text"])
+        if status["spoiler_text"]:
+            out.append("Spoiler: " + status["spoiler_text"])
         out.append(b"\n")
         lines = []
-        content = mention["status"]["content"]
+        content = status["content"]
         soup = BeautifulSoup(content.replace("\n", " "), features="lxml")
         for br in soup.find_all("br"):
             br.replace_with("\n")
@@ -102,11 +115,14 @@ class Printer(BaseMastodon):
             if line.startswith("https://"):
                 out.append(self.get_qrcode_bin(line.strip()))
 
-        for attachment in mention["status"]["media_attachments"][:2]:
+        for attachment in status["media_attachments"][:2]:
             if attachment["type"] != "image":
                 continue
             r = self.session.get(attachment["url"])
-            r.raise_for_status()
+            try:
+                r.raise_for_status()
+            except Exception:
+                continue
             out.append(self.render_image(io.BytesIO(r.content)))
             if attachment["description"]:
                 out.append(b"\n")
@@ -132,14 +148,12 @@ class Printer(BaseMastodon):
             sock.close()
         self.logger.info("Print sent to printer, {} bytes".format(len(out)))
 
-        if not mention["status"]["in_reply_to_id"]:
-            r = self.session.post(
-                "{}/api/v1/statuses/{}/favourite".format(
-                    self.url_base, mention["status"]["id"]
-                )
+        if self.config.get("favorite_printed", True) and (not status["in_reply_to_id"]):
+            self.api(
+                "{}/api/v1/statuses/{}/favourite".format(self.url_base, status["id"]),
+                method="POST",
             )
-            r.raise_for_status()
-            self.logger.info("Favorited {}".format(mention["status"]["url"]))
+            self.logger.info("Favorited {}".format(status["url"]))
 
     def render_image(self, file):
         im = Image.open(file)

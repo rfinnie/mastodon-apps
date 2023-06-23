@@ -35,31 +35,31 @@ class Fish(BaseMastodon):
                 visibility = "unlisted"
             else:
                 visibility = mention["status"]["visibility"]
-            r = self.session.post(
+            self.api(
                 "{}/api/v1/statuses".format(self.url_base),
                 data={
                     "status": reply_text,
                     "in_reply_to_id": mention["status"]["id"],
                     "visibility": visibility,
                 },
+                method="POST",
             )
-            r.raise_for_status()
             if not mention["status"]["in_reply_to_id"]:
-                r = self.session.post(
+                self.api(
                     "{}/api/v1/statuses/{}/favourite".format(
                         self.url_base, mention["status"]["id"]
-                    )
+                    ),
+                    method="POST",
                 )
-                r.raise_for_status()
         elif self.re_iwill.search(post_text):
             if mention["status"].get("in_reply_to_account_id") != self.me["id"]:
                 return
-            r = self.session.post(
+            self.api(
                 "{}/api/v1/statuses/{}/favourite".format(
                     self.url_base, mention["status"]["id"]
-                )
+                ),
+                method="POST",
             )
-            r.raise_for_status()
 
 
 if __name__ == "__main__":

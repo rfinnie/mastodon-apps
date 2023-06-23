@@ -26,6 +26,7 @@ class BaseMastodon:
 
     def __init__(self):
         self.session = requests.Session()
+        self.stream_session = requests.Session()
 
     def parse_args(self, argv=None):
         if argv is None:
@@ -66,10 +67,12 @@ class BaseMastodon:
             for line in [line.decode("UTF-8") for line in raw_lines[:-1]]:
                 yield line
 
-    def stream_notifications(self):
+    def stream_listen(self):
         message = {}
-        r = self.session.get(
-            "{}/api/v1/streaming/user/notification".format(self.url_base), stream=True
+        r = self.stream_session.get(
+            "{}/api/v1/streaming/user".format(self.url_base),
+            headers={"Authorization": "Bearer {}".format(self.config["bearer_token"])},
+            stream=True,
         )
         r.raise_for_status()
         for line in self.stream_iter_lines(r):
@@ -87,15 +90,33 @@ class BaseMastodon:
             message = {}
 
     def process_message(self, message):
-        if message.get("event") != "notification":
+        if message.get("event") not in ("notification", "update"):
             return
         try:
             data = json.loads(message.get("data"))
         except (TypeError, json.decoder.JSONDecodeError):
             self.logger.exception("Exception decoding message data")
             return
-        if data.get("type") == "mention":
+        if message["event"] == "notification" and data.get("type") == "mention":
             self.process_mention(data)
+        elif message["event"] == "update":
+            self.process_update(data)
+
+    def process_mention(self, mention):
+        pass
+
+    def process_update(self, status):
+        pass
+
+    def api(self, url, method="GET", data=None):
+        r = self.session.request(
+            method,
+            url,
+            headers={"Authorization": "Bearer {}".format(self.config["bearer_token"])},
+            data=data,
+        )
+        r.raise_for_status()
+        return r.json()
 
     def main(self):
         self.args = self.parse_args()
@@ -108,22 +129,15 @@ class BaseMastodon:
         with self.args.config.open() as f:
             self.config = yaml.safe_load(f)
         self.url_base = self.config["url_base"]
-        self.session.headers["Authorization"] = "Bearer {}".format(
-            self.config["bearer_token"]
-        )
 
-        r = self.session.get("{}/api/v2/instance".format(self.url_base))
-        r.raise_for_status()
-        self.server = r.json()
-        r = self.session.get(
+        self.server = self.api("{}/api/v2/instance".format(self.url_base))
+        self.me = self.api(
             "{}/api/v1/accounts/verify_credentials".format(self.url_base)
         )
-        r.raise_for_status()
-        self.me = r.json()
 
         while True:
             try:
-                self.stream_notifications()
+                self.stream_listen()
             except Exception:
                 self.logger.exception("Unexpected exception")
             time.sleep(30)
