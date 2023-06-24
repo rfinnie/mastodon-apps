@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 import io
+import logging
 import socket
 import sys
 import textwrap
@@ -29,6 +30,13 @@ from lib import BaseMastodon
 class Printer(BaseMastodon):
     name = "printer"
     calling_file = __file__
+
+    def setup(self):
+        if isinstance(URLExtract, ImportError):
+            self.url_extractor = None
+        urlextract_logger = logging.getLogger("urlextract")
+        urlextract_logger.info = urlextract_logger.debug
+        self.url_extractor = URLExtract(cache_dns=False)
 
     def tobin(self, data):
         if not isinstance(data, (list, tuple)):
@@ -64,13 +72,15 @@ class Printer(BaseMastodon):
         self.print_status(status)
 
     def extract_urls(self, line):
-        if isinstance(URLExtract, ImportError):
+        if not self.url_extractor:
             if line.startswith("https://"):
                 return [line.strip()]
-        extractor = URLExtract()
+            return []
         return [
             url
-            for url in extractor.find_urls(line, check_dns=False, with_schema_only=True)
+            for url in self.url_extractor.find_urls(
+                line, check_dns=False, with_schema_only=True
+            )
             if url.startswith("https://")
         ]
 

@@ -118,6 +118,9 @@ class BaseMastodon:
         r.raise_for_status()
         return r.json()
 
+    def setup(self):
+        pass
+
     def main(self):
         self.args = self.parse_args()
         self.logger = logging.getLogger(self.name)
@@ -134,6 +137,8 @@ class BaseMastodon:
         self.me = self.api(
             "{}/api/v1/accounts/verify_credentials".format(self.url_base)
         )
+
+        self.setup()
 
         while True:
             try:
