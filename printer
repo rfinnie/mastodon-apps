@@ -155,7 +155,6 @@ class Printer(BaseMastodon):
         qr_limit = self.config.get("qr_limit", 1)
         for url in qrs[:qr_limit]:
             out.append(self.get_qrcode_bin(url))
-            out.append(url[:48])
             out.append(b"\n\n")
 
         out.append(b"\x1b@")  # Reset
