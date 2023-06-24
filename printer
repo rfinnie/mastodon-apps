@@ -14,6 +14,11 @@ import dateutil.parser
 from PIL import Image, ImageOps
 from unidecode import unidecode
 
+try:
+    from urlextract import URLExtract
+except ImportError as e:
+    URLExtract = e
+
 from lib import BaseMastodon
 
 
@@ -53,6 +58,17 @@ class Printer(BaseMastodon):
         if status["reblog"]:
             return
         self.print_status(status)
+
+    def extract_urls(self, line):
+        if isinstance(URLExtract, ImportError):
+            if line.startswith("https://"):
+                return [line.strip()]
+        extractor = URLExtract()
+        return [
+            url
+            for url in extractor.find_urls(line, check_dns=False, with_schema_only=True)
+            if url.startswith("https://")
+        ]
 
     def print_status(self, status):
         self.logger.info(
@@ -100,10 +116,12 @@ class Printer(BaseMastodon):
         lines = []
         content = status["content"]
         soup = BeautifulSoup(content.replace("\n", " "), features="lxml")
+        qrs = []
         for br in soup.find_all("br"):
             br.replace_with("\n")
         for para in soup.find_all("p"):
             para = para.get_text().strip()
+            qrs.extend(self.extract_urls(para))
             self.logger.debug(repr(para))
             for line in para.split("\n"):
                 lines.extend(textwrap.wrap(line, width=48))
@@ -112,8 +130,6 @@ class Printer(BaseMastodon):
         for line in lines:
             self.logger.debug(repr(line))
             out.append(line + "\n")
-            if line.startswith("https://"):
-                out.append(self.get_qrcode_bin(line.strip()))
 
         attachment_limit = self.config.get("attachment_limit", 2)
         for attachment in status["media_attachments"][:attachment_limit]:
@@ -132,6 +148,12 @@ class Printer(BaseMastodon):
                 ):
                     out.append(line + "\n")
             out.append(b"\n")
+
+        qr_limit = self.config.get("qr_limit", 1)
+        for url in qrs[:qr_limit]:
+            out.append(self.get_qrcode_bin(url))
+            out.append(url[:48])
+            out.append(b"\n\n")
 
         out.append(b"\x1b@")  # Reset
         out.append(b"\x1dVB\x96")  # Paper cut, 5 lines bottom margin
