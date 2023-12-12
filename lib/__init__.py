@@ -5,9 +5,13 @@
 # SPDX-License-Identifier: MPL-2.0
 
 import argparse
+import base64
+import hashlib
+import hmac
 import json
 import logging
 import pathlib
+import pickle
 import sys
 import time
 
@@ -17,6 +21,7 @@ import yaml
 
 class BaseMastodon:
     name = "mastodon"
+    idempotency_key = "rf_mastodon_apps"
     calling_file = __file__
     session = None
     me = None
@@ -109,10 +114,24 @@ class BaseMastodon:
         pass
 
     def api(self, url, method="GET", data=None):
+        # Note that this is not cryptographically safe, just to prevent
+        # accidental replays.
+        # https://docs.joinmastodon.org/methods/statuses/#headers
+        idempotency_id = base64.b64encode(
+            hmac.HMAC(
+                self.idempotency_key.encode("UTF-8"),
+                msg=pickle.dumps((url, method, data)),
+                digestmod=hashlib.sha256,
+            ).digest()
+        ).decode("UTF-8")
+
         r = self.session.request(
             method,
             url,
-            headers={"Authorization": "Bearer {}".format(self.config["bearer_token"])},
+            headers={
+                "Authorization": "Bearer {}".format(self.config["bearer_token"]),
+                "Idempotency-Key": idempotency_id,
+            },
             data=data,
         )
         r.raise_for_status()
