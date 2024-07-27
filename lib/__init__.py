@@ -140,7 +140,7 @@ class BaseMastodon:
     def setup(self):
         pass
 
-    def main(self):
+    def main(self, listen=True):
         self.args = self.parse_args()
         self.logger = logging.getLogger(self.name)
         logging_format = "%(levelname)s:%(name)s:%(message)s"
@@ -158,6 +158,9 @@ class BaseMastodon:
         )
 
         self.setup()
+
+        if not listen:
+            return
 
         while True:
             try:
