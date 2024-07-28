@@ -8,7 +8,11 @@
 
 import datetime
 import time
-from zoneinfo import ZoneInfo
+
+try:
+    import zoneinfo
+except ImportError:
+    from backports import zoneinfo
 
 import dateutil.parser
 
@@ -19,7 +23,7 @@ class EightFortySeven(BaseMastodon):
     name = "847"
     calling_file = __file__
 
-    tz = ZoneInfo("America/Denver")
+    tz = zoneinfo.ZoneInfo("America/Denver")
     hm = (8, 47)
     prep = datetime.timedelta(minutes=15)
     current_temp = None
