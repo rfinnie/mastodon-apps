@@ -204,7 +204,6 @@ class Printer(BaseMastodon):
             return
         im = None
         try:
-            raise Exception()
             r = self.session.get(attachment["url"])
             r.raise_for_status()
             im = Image.open(io.BytesIO(r.content))
