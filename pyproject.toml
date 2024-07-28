@@ -1,0 +1,27 @@
+
+[project]
+name = "mastodon-apps"
+authors = [
+    {name = "Ryan Finnie", email = "ryan@finnie.org"},
+]
+description = "Mastodon apps"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MPL-2.0"}
+dependencies = [
+    "Pillow",
+    "PyYAML",
+    "Unidecode",
+    'backports.zoneinfo; python_version<"3.9"',
+    "beautifulsoup4",
+    "blurhash-python",
+    "python-dateutil",
+    "requests",
+    "urlextract",
+]
+dynamic = ["version"]
+
+[project.scripts]
+mastodon-app-eightfortyseven = "mastodon_apps.eightfortyseven:main"
+mastodon-app-fish = "mastodon_apps.fish:main"
+mastodon-app-printer = "mastodon_apps.printer:main"

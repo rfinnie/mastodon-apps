@@ -24,7 +24,7 @@ try:
 except ImportError as e:
     blurhash = e
 
-from lib import BaseMastodon
+from .mastodon import BaseMastodon
 
 
 class Printer(BaseMastodon):
@@ -242,5 +242,9 @@ class Printer(BaseMastodon):
         return out
 
 
+def main():
+    return Printer().main()
+
+
 if __name__ == "__main__":
-    sys.exit(Printer().main())
+    sys.exit(main())

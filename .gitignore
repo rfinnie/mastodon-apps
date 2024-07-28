@@ -1,3 +1,7 @@
+*.egg-info/
+build/
+__pycache__/
 847.yaml
+eightfortyseven.yaml
 fish.yaml
 printer.yaml

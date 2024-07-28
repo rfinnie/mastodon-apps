@@ -7,6 +7,7 @@
 # Run from cron at 1400Z, it will figure out correctly when to post
 
 import datetime
+import sys
 import time
 
 try:
@@ -16,11 +17,11 @@ except ImportError:
 
 import dateutil.parser
 
-from lib import BaseMastodon
+from .mastodon import BaseMastodon
 
 
 class EightFortySeven(BaseMastodon):
-    name = "847"
+    name = "eightfortyseven"
     calling_file = __file__
 
     tz = zoneinfo.ZoneInfo("America/Denver")
@@ -113,7 +114,11 @@ class EightFortySeven(BaseMastodon):
         )
 
 
-if __name__ == "__main__":
+def main():
     bot = EightFortySeven()
     bot.main(listen=False)
-    bot.run()
+    return bot.run()
+
+
+if __name__ == "__main__":
+    sys.exit(main())

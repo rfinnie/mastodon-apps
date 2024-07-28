@@ -9,7 +9,7 @@ import sys
 
 from bs4 import BeautifulSoup
 
-from lib import BaseMastodon
+from .mastodon import BaseMastodon
 
 
 class Fish(BaseMastodon):
@@ -62,5 +62,9 @@ class Fish(BaseMastodon):
             )
 
 
+def main():
+    return Fish().main()
+
+
 if __name__ == "__main__":
-    sys.exit(Fish().main())
+    sys.exit(main())
