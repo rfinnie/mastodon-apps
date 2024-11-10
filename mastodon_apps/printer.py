@@ -32,11 +32,12 @@ class Printer(BaseMastodon):
     calling_file = __file__
 
     def setup(self):
-        if isinstance(URLExtract, ImportError):
-            self.url_extractor = None
         urlextract_logger = logging.getLogger("urlextract")
         urlextract_logger.info = urlextract_logger.debug
-        self.url_extractor = URLExtract(cache_dns=False)
+        if isinstance(URLExtract, ImportError):
+            self.url_extractor = None
+        else:
+            self.url_extractor = URLExtract(cache_dns=False)
 
     def tobin(self, data):
         if not isinstance(data, (list, tuple)):
