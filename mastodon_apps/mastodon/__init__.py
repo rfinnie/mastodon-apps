@@ -113,7 +113,7 @@ class BaseMastodon:
     def process_update(self, status):
         pass
 
-    def api(self, url, method="GET", data=None):
+    def api(self, url, method="GET", data=None, files=None, get_result=False):
         # Note that this is not cryptographically safe, just to prevent
         # accidental replays.
         # https://docs.joinmastodon.org/methods/statuses/#headers
@@ -125,6 +125,11 @@ class BaseMastodon:
             ).digest()
         ).decode("UTF-8")
 
+        kwargs = {}
+        if data:
+            kwargs["data"] = data
+        if files:
+            kwargs["files"] = files
         r = self.session.request(
             method,
             url,
@@ -132,10 +137,13 @@ class BaseMastodon:
                 "Authorization": "Bearer {}".format(self.config["bearer_token"]),
                 "Idempotency-Key": idempotency_id,
             },
-            data=data,
+            **kwargs,
         )
         r.raise_for_status()
-        return r.json()
+        if get_result:
+            return r
+        else:
+            return r.json()
 
     def setup(self):
         pass
