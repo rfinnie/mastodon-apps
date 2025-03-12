@@ -22,7 +22,7 @@ class Jucika(BaseMastodon):
         data = {}
         description = comic.get("description")
         if description:
-            data["description"] = (description,)
+            data["description"] = description
         res = self.api(
             "{}/api/v2/media".format(self.url_base),
             data=data,
