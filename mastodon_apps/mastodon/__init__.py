@@ -46,15 +46,10 @@ class BaseMastodon:
             "--debug", action="store_true", help="Print debugging information"
         )
 
-        default_config_fn = (
-            pathlib.Path(self.calling_file)
-            .absolute()
-            .parent.joinpath("{}.yaml".format(self.name))
-        )
         parser.add_argument(
             "--config",
-            type=pathlib.Path,
-            default=default_config_fn,
+            action="append",
+            default=[],
             help="YAML configuration file",
             metavar="FILE",
         )
@@ -156,8 +151,27 @@ class BaseMastodon:
             logging_format = "%(asctime)s:" + logging_format
         logging_level = logging.DEBUG if self.args.debug else logging.INFO
         logging.basicConfig(format=logging_format, level=logging_level)
-        with self.args.config.open() as f:
-            self.config = yaml.safe_load(f)
+        if not self.args.config:
+            self.args.config.append(
+                str(
+                    pathlib.Path(self.calling_file)
+                    .absolute()
+                    .parent.joinpath("{}.yaml".format(self.name))
+                )
+            )
+
+        def merge_dicts(dest, source):
+            for k, v in source.items():
+                if k in dest and isinstance(dest[k], dict) and isinstance(v, dict):
+                    dest[k] = merge_dicts(dest[k], v)
+                else:
+                    dest[k] = v
+            return dest
+
+        self.config = {}
+        for fn in self.args.config:
+            with open(fn) as f:
+                merge_dicts(self.config, yaml.safe_load(f))
         self.url_base = self.config["url_base"]
 
         self.server = self.api("{}/api/v2/instance".format(self.url_base))
