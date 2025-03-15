@@ -40,13 +40,18 @@ class Jucika(BaseMastodon):
         j = res.json()
         attachment_id = j["id"]
 
+
+        data = [
+            ("media_ids[]", attachment_id),
+            ("sensitive", ("true" if comic.get("sensitive") else "false")),
+            ("visibility", self.config.get("visibility", "public")),
+        ]
+        title = comic.get("title")
+        if title:
+            data.append(("status", title))
         self.api(
             "{}/api/v1/statuses".format(self.url_base),
-            data=[
-                ("media_ids[]", attachment_id),
-                ("sensitive", ("true" if comic.get("sensitive") else "false")),
-                ("visibility", self.config.get("visibility", "public")),
-            ],
+            data=data,
             method="POST",
         )
 
