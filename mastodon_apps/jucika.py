@@ -4,6 +4,7 @@
 # SPDX-FileCopyrightText: Copyright (C) 2025 Ryan Finnie
 # SPDX-License-Identifier: MPL-2.0
 
+import datetime
 import random
 import sys
 import time
@@ -15,8 +16,32 @@ class Jucika(BaseMastodon):
     name = "jucika"
     calling_file = __file__
 
+    def add_app_args(self, parser):
+        parser.add_argument("--random", action="store_true", help="Truly random comic")
+
     def run(self):
-        comic = random.choice(self.config["comics"])
+        seed = self.config.get("seed")
+        if self.args.random:
+            seed = None
+        rand = random.Random(seed)
+        comics = self.config["comics"]
+        rand.shuffle(comics)
+        day = (
+            datetime.datetime.now(tz=datetime.timezone.utc)
+            - datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
+        ).days
+        pos = day % len(comics)
+        comic = comics[pos]
+        next_pos = (day + 1) % len(comics)
+        next_comic = comics[next_pos]
+
+        self.logger.info("Posting {}: {}".format(comic["filename"], comic.get("title")))
+        if seed:
+            self.logger.info(
+                "Tomorrow is scheduled to be {}: {}".format(
+                    next_comic["filename"], next_comic.get("title")
+                )
+            )
 
         fh = open("{}/{}".format(self.config["image_dir"], comic["filename"]), "rb")
         data = {}
@@ -39,7 +64,6 @@ class Jucika(BaseMastodon):
             time.sleep(60)
         j = res.json()
         attachment_id = j["id"]
-
 
         data = [
             ("media_ids[]", attachment_id),

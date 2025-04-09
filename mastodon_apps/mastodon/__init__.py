@@ -33,6 +33,9 @@ class BaseMastodon:
         self.session = requests.Session()
         self.stream_session = requests.Session()
 
+    def add_app_args(self, parser):
+        pass
+
     def parse_args(self, argv=None):
         if argv is None:
             argv = sys.argv
@@ -54,6 +57,7 @@ class BaseMastodon:
             metavar="FILE",
         )
 
+        self.add_app_args(parser)
         return parser.parse_args(args=argv[1:])
 
     def stream_iter_lines(self, r):
