@@ -20,16 +20,20 @@ class Jucika(BaseMastodon):
         parser.add_argument("--random", action="store_true", help="Truly random comic")
 
     def run(self):
-        seed = self.config.get("seed")
-        if self.args.random:
-            seed = None
-        rand = random.Random(seed)
         comics = self.config["comics"]
-        rand.shuffle(comics)
         day = (
             datetime.datetime.now(tz=datetime.timezone.utc)
             - datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
         ).days
+        base_seed = self.config.get("seed")
+        if self.args.random or (not base_seed):
+            seed = None
+        else:
+            # Seed remains the same throughout the run of the comics,
+            # but changes for the next run
+            seed = base_seed + (day - (day % len(comics)))
+        rand = random.Random(seed)
+        rand.shuffle(comics)
         pos = day % len(comics)
         comic = comics[pos]
         next_pos = (day + 1) % len(comics)
