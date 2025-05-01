@@ -18,6 +18,7 @@ class Jucika(BaseMastodon):
 
     def add_app_args(self, parser):
         parser.add_argument("--random", action="store_true", help="Truly random comic")
+        parser.add_argument("--dry-run", action="store_true", help="Do not post")
 
     def run(self):
         comics = self.config["comics"]
@@ -46,6 +47,9 @@ class Jucika(BaseMastodon):
                     next_comic["filename"], next_comic.get("title")
                 )
             )
+
+        if self.args.dry_run:
+            return
 
         fh = open("{}/{}".format(self.config["image_dir"], comic["filename"]), "rb")
         data = {}
