@@ -48,6 +48,7 @@ class Jucika(BaseMastodon):
         next_pos = (day + 1) % len(comics)
         next_comic = comics[next_pos]
 
+        self.logger.debug("Today ({}) is day {}; picking from position {} with seed {}".format(today, day, pos, seed))
         self.logger.info("Posting {}: {}".format(comic["filename"], comic.get("title")))
         if seed:
             self.logger.info(
