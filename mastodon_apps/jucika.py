@@ -9,6 +9,8 @@ import random
 import sys
 import time
 
+import dateutil.parser
+
 from .mastodon import BaseMastodon
 
 
@@ -19,13 +21,19 @@ class Jucika(BaseMastodon):
     def add_app_args(self, parser):
         parser.add_argument("--random", action="store_true", help="Truly random comic")
         parser.add_argument("--dry-run", action="store_true", help="Do not post")
+        parser.add_argument("--datetime-override", help="Date/time override")
 
     def run(self):
         comics = self.config["comics"]
-        day = (
-            datetime.datetime.now(tz=datetime.timezone.utc)
-            - datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
-        ).days
+        if self.args.datetime_override:
+            today = dateutil.parser.parse(self.args.datetime_override)
+            if today.tzinfo:
+                today = today.astimezone(datetime.timezone.utc)
+            else:
+                today = today.replace(tzinfo=datetime.timezone.utc)
+        else:
+            today = datetime.datetime.now(tz=datetime.timezone.utc)
+        day = (today - datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)).days
         base_seed = self.config.get("seed")
         if self.args.random or (not base_seed):
             seed = None
