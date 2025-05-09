@@ -4,6 +4,7 @@
 # SPDX-FileCopyrightText: Copyright (C) 2025 Ryan Finnie
 # SPDX-License-Identifier: MPL-2.0
 
+import copy
 import datetime
 import random
 import sys
@@ -23,16 +24,8 @@ class Jucika(BaseMastodon):
         parser.add_argument("--dry-run", action="store_true", help="Do not post")
         parser.add_argument("--datetime-override", help="Date/time override")
 
-    def run(self):
-        comics = self.config["comics"]
-        if self.args.datetime_override:
-            today = dateutil.parser.parse(self.args.datetime_override)
-            if today.tzinfo:
-                today = today.astimezone(datetime.timezone.utc)
-            else:
-                today = today.replace(tzinfo=datetime.timezone.utc)
-        else:
-            today = datetime.datetime.now(tz=datetime.timezone.utc)
+    def get_day_comic(self, today):
+        comics = copy.copy(self.config["comics"])
         day = (today - datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)).days
         base_seed = self.config.get("seed")
         if self.args.random or (not base_seed):
@@ -45,15 +38,39 @@ class Jucika(BaseMastodon):
         rand.shuffle(comics)
         pos = day % len(comics)
         comic = comics[pos]
-        next_pos = (day + 1) % len(comics)
-        next_comic = comics[next_pos]
+        self.logger.debug(
+            "{} is day {}; picked position {} with seed {}".format(
+                today, day, pos, seed
+            )
+        )
+        return comic
 
-        self.logger.debug("Today ({}) is day {}; picking from position {} with seed {}".format(today, day, pos, seed))
-        self.logger.info("Posting {}: {}".format(comic["filename"], comic.get("title")))
-        if seed:
+    def run(self):
+        if self.args.datetime_override:
+            today = dateutil.parser.parse(self.args.datetime_override)
+            if today.tzinfo:
+                today = today.astimezone(datetime.timezone.utc)
+            else:
+                today = today.replace(tzinfo=datetime.timezone.utc)
+        else:
+            today = datetime.datetime.now(tz=datetime.timezone.utc)
+        tomorrow = today + datetime.timedelta(days=1)
+        if self.args.random or (not self.config.get("seed")):
+            comic = random.choice(self.config["comics"])
+            next_comic = None
+        else:
+            comic = self.get_day_comic(today)
+            next_comic = self.get_day_comic(tomorrow)
+
+        self.logger.info(
+            "Posting for today ({}): {}: {}".format(
+                today, comic["filename"], comic.get("title")
+            )
+        )
+        if next_comic:
             self.logger.info(
-                "Tomorrow is scheduled to be {}: {}".format(
-                    next_comic["filename"], next_comic.get("title")
+                "Tomorrow ({}) will be: {}: {}".format(
+                    tomorrow, next_comic["filename"], next_comic.get("title")
                 )
             )
 
