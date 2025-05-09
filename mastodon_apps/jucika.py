@@ -28,12 +28,9 @@ class Jucika(BaseMastodon):
         comics = copy.copy(self.config["comics"])
         day = (today - datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)).days
         base_seed = self.config.get("seed")
-        if self.args.random or (not base_seed):
-            seed = None
-        else:
-            # Seed remains the same throughout the run of the comics,
-            # but changes for the next run
-            seed = base_seed + (day - (day % len(comics)))
+        # Seed remains the same throughout the run of the comics,
+        # but changes for the next run
+        seed = base_seed + (day - (day % len(comics)))
         rand = random.Random(seed)
         rand.shuffle(comics)
         pos = day % len(comics)
