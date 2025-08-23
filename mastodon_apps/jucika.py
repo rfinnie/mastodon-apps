@@ -27,7 +27,7 @@ class Jucika(BaseMastodon):
     def get_day_comic(self, today):
         comics = copy.copy(self.config["comics"])
         day = (today - datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)).days
-        base_seed = self.config.get("seed")
+        base_seed = self.config.get("seed", 0)
         # Seed remains the same throughout the run of the comics,
         # but changes for the next run
         seed = base_seed + (day - (day % len(comics)))
@@ -52,7 +52,7 @@ class Jucika(BaseMastodon):
         else:
             today = datetime.datetime.now(tz=datetime.timezone.utc)
         tomorrow = today + datetime.timedelta(days=1)
-        if self.args.random or (not self.config.get("seed")):
+        if self.args.random:
             comic = random.choice(self.config["comics"])
             next_comic = None
         else:
