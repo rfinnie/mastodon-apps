@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # SPDX-FileComment: Fish! Mastodon bot
 # SPDX-FileCopyrightText: Copyright (C) 2023 Ryan Finnie
 # SPDX-License-Identifier: MPL-2.0
@@ -26,11 +24,7 @@ class Fish(BaseMastodon):
         post_text = self.re_strip_users.sub("", post_text).strip()
         post_text = self.re_strip_dots.sub("", post_text).strip()
         if self.re_fish.search(post_text):
-            reply_text = (
-                "@{} Today's fish is trout à la crème. Enjoy your meal.".format(
-                    mention["status"]["account"]["acct"]
-                )
-            )
+            reply_text = "@{} Today's fish is trout à la crème. Enjoy your meal.".format(mention["status"]["account"]["acct"])
             if mention["status"]["visibility"] == "public":
                 visibility = "unlisted"
             else:
@@ -46,18 +40,14 @@ class Fish(BaseMastodon):
             )
             if not mention["status"]["in_reply_to_id"]:
                 self.api(
-                    "{}/api/v1/statuses/{}/favourite".format(
-                        self.url_base, mention["status"]["id"]
-                    ),
+                    "{}/api/v1/statuses/{}/favourite".format(self.url_base, mention["status"]["id"]),
                     method="POST",
                 )
         elif self.re_iwill.search(post_text):
             if mention["status"].get("in_reply_to_account_id") != self.me["id"]:
                 return
             self.api(
-                "{}/api/v1/statuses/{}/favourite".format(
-                    self.url_base, mention["status"]["id"]
-                ),
+                "{}/api/v1/statuses/{}/favourite".format(self.url_base, mention["status"]["id"]),
                 method="POST",
             )
 

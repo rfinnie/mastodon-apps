@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # SPDX-FileComment: Jucika Mastodon bot
 # SPDX-FileCopyrightText: Copyright (C) 2025 Ryan Finnie
 # SPDX-License-Identifier: MPL-2.0
@@ -35,11 +33,7 @@ class Jucika(BaseMastodon):
         rand.shuffle(comics)
         pos = day % len(comics)
         comic = comics[pos]
-        self.logger.debug(
-            "{} is day {}; picked position {} with seed {}".format(
-                today, day, pos, seed
-            )
-        )
+        self.logger.debug("{} is day {}; picked position {} with seed {}".format(today, day, pos, seed))
         return comic
 
     def run(self):
@@ -59,17 +53,9 @@ class Jucika(BaseMastodon):
             comic = self.get_day_comic(today)
             next_comic = self.get_day_comic(tomorrow)
 
-        self.logger.info(
-            "Posting for today ({}): {}: {}".format(
-                today, comic["filename"], comic.get("title")
-            )
-        )
+        self.logger.info("Posting for today ({}): {}: {}".format(today, comic["filename"], comic.get("title")))
         if next_comic:
-            self.logger.info(
-                "Tomorrow ({}) will be: {}: {}".format(
-                    tomorrow, next_comic["filename"], next_comic.get("title")
-                )
-            )
+            self.logger.info("Tomorrow ({}) will be: {}: {}".format(tomorrow, next_comic["filename"], next_comic.get("title")))
 
         if self.args.dry_run:
             return

@@ -1,3 +1,6 @@
+# SPDX-PackageSummary: mastodon-apps
+# SPDX-FileCopyrightText: Copyright (C) 2023-2025 Ryan Finnie
+# SPDX-License-Identifier: MPL-2.0
 
 [project]
 name = "mastodon-apps"
@@ -26,3 +29,10 @@ mastodon-app-eightfortyseven = "mastodon_apps.eightfortyseven:main"
 mastodon-app-fish = "mastodon_apps.fish:main"
 mastodon-app-jucika = "mastodon_apps.jucika:main"
 mastodon-app-printer = "mastodon_apps.printer:main"
+
+[tool.black]
+line-length = 132
+
+# https://pypi.org/project/Flake8-pyproject/
+[tool.flake8]
+max-line-length = 132

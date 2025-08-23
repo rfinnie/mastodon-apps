@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # SPDX-FileComment: Printer Mastodon bot
 # SPDX-FileCopyrightText: Copyright (C) 2023 Ryan Finnie
 # SPDX-License-Identifier: MPL-2.0
@@ -78,11 +76,7 @@ class Printer(BaseMastodon):
                 return [line.strip()]
             return []
         return [
-            url
-            for url in self.url_extractor.find_urls(
-                line, check_dns=False, with_schema_only=True
-            )
-            if url.startswith("https://")
+            url for url in self.url_extractor.find_urls(line, check_dns=False, with_schema_only=True) if url.startswith("https://")
         ]
 
     def print_status(self, status):
@@ -120,11 +114,7 @@ class Printer(BaseMastodon):
             if other_mention["id"] == status["in_reply_to_account_id"]:
                 out.append(" (reply)")
             out.append("\n")
-        out.append(
-            "Date: {}\n".format(
-                dateutil.parser.parse(status["created_at"]).strftime("%c")
-            )
-        )
+        out.append("Date: {}\n".format(dateutil.parser.parse(status["created_at"]).strftime("%c")))
         if status["spoiler_text"]:
             out.append("Spoiler: " + status["spoiler_text"])
         out.append(b"\n")
@@ -167,9 +157,7 @@ class Printer(BaseMastodon):
                 f.write(out)
         else:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.connect(
-                (self.config["printer_host"], self.config.get("printer_port", 9100))
-            )
+            sock.connect((self.config["printer_host"], self.config.get("printer_port", 9100)))
             sock.send(out)
             sock.close()
         self.logger.info("Print sent to printer, {} bytes".format(len(out)))
@@ -210,20 +198,14 @@ class Printer(BaseMastodon):
             im = Image.open(io.BytesIO(r.content))
         except Exception:
             pass
-        if (
-            (not im)
-            and attachment.get("blurhash")
-            and (not isinstance(blurhash, ImportError))
-        ):
+        if (not im) and attachment.get("blurhash") and (not isinstance(blurhash, ImportError)):
             im = blurhash.decode(attachment["blurhash"], width=64, height=64)
         if not im:
             return
         out.append(self.render_image(im))
         if attachment["description"]:
             out.append(b"\n")
-            for line in textwrap.wrap(
-                "Image description: " + attachment["description"], width=48
-            ):
+            for line in textwrap.wrap("Image description: " + attachment["description"], width=48):
                 out.append(line + "\n")
         return out
 

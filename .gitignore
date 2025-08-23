@@ -1,8 +1,16 @@
+# SPDX-PackageSummary: mastodon-apps
+# SPDX-FileCopyrightText: Copyright (C) 2023-2025 Ryan Finnie
+# SPDX-License-Identifier: MPL-2.0
 *.egg-info/
 build/
 __pycache__/
 847.yaml
+847.*.yaml
 eightfortyseven.yaml
+eightfortyseven.*.yaml
 fish.yaml
+fish.*.yaml
 jucika.yaml
+jucika.*.yaml
 printer.yaml
+printer.*.yaml

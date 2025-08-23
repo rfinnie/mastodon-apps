@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # SPDX-FileComment: 8:47 Mastodon bot
 # SPDX-FileCopyrightText: Copyright (C) 2024 Ryan Finnie
 # SPDX-License-Identifier: MPL-2.0
@@ -73,9 +71,7 @@ class EightFortySeven(BaseMastodon):
         self.post()
 
     def get_temps(self):
-        res = self.session.get(
-            "https://api.weather.gov/stations/KCNM/observations/latest"
-        )
+        res = self.session.get("https://api.weather.gov/stations/KCNM/observations/latest")
         res.raise_for_status()
         j = res.json()
         self.current_temp = int(j["properties"]["temperature"]["value"] * 1.8 + 32)

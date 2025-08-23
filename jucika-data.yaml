@@ -1,6 +1,11 @@
+# SPDX-FileComment: Jucika Mastodon bot
+# SPDX-FileCopyrightText: Copyright (C) 2025 Ryan Finnie
+# SPDX-License-Identifier: CC-BY-SA-4.0
+
 # Unless otherwise noted, all title translations were done by running the
 # image through Google Translate, sanity checking and cleaning up by
 # someone who doesn't understand Hungarian.
+---
 comics:
   - filename: "6'2.jpg"
     title: "Jucika is having a ball"
@@ -54,10 +59,9 @@ comics:
     title: "Jucika in rural Szállás"
   - filename: "AtTheLibrary.jpg"
     title: "Jucika in a library"
-    # [SILENCE PLEASE!]
   - filename: "AtTheMuseum.jpg"
     title: "Jucika museum"
-    sensitive: True
+    sensitive: true
   - filename: "AtWork.jpg"
     title: "Jucika and the professional"
   - filename: "AutographHunter.jpg"
@@ -70,7 +74,7 @@ comics:
     title: "Jucika and the magic of the ball"
   - filename: "Basketball.jpg"
     title: "Jucika throws a basket"
-    sensitive: True
+    sensitive: true
   - filename: "Basket.jpg"
     title: "Jucika and the canning"
   - filename: "BathTime.jpg"
@@ -137,7 +141,7 @@ comics:
     title: "Jucika causes an accident"
   - filename: "ChasteGardener.jpg"
     title: "Jucika and the embarrassed gardener"
-    sensitive: True
+    sensitive: true
   - filename: "Chichken.jpg"
     title: "Jucika's hen"
   - filename: "ChoosingAHat.jpg"
@@ -207,12 +211,12 @@ comics:
   - filename: "Dance2.jpg"
     title: "Jucika on holiday (getting to know each other)"
   - filename: "Dance.jpg"
-    # Can't figure out a good translation for this
+  # Can't figure out a good translation for this
   - filename: "DANGER.jpg"
     title: "Jucika in the shop window"
   - filename: "DefectiveProduct.jpg"
     title: "Jucika and the scraps"
-    # Can't figure out a good translation for this
+  # Can't figure out a good translation for this
   - filename: "DeliveryRoom.jpg"
   - filename: "Detention.jpg"
     title: "Jucika and urgent work"
@@ -226,7 +230,7 @@ comics:
     title: "Jucika's Sunday supplement"
   - filename: "DogDays2.jpg"
     title: "Jucika and the heat wave"
-    # Can't figure out a good translation for this
+  # Can't figure out a good translation for this
   - filename: "DogDays.jpg"
   - filename: "DogFriendship.jpg"
     title: "Jucika and dog friendship"
@@ -236,7 +240,7 @@ comics:
     title: "Jucika bakes donuts"
   - filename: "Dreams.jpg"
     title: "Jucika dreams"
-    sensitive: True
+    sensitive: true
   - filename: "Driving.jpg"
     title: "Jucika is driving"
   - filename: "DrunkHusband.jpg"
@@ -253,7 +257,7 @@ comics:
     title: "Jucika and the Easter pipe burst"
   - filename: "EasterSprinkle2.jpg"
     title: "Jucika Easter"
-    sensitive: True
+    sensitive: true
   - filename: "EasterSprinkle.jpg"
     title: "Jucika and the Easter sprinkling"
   - filename: "Educate.jpg"
@@ -284,7 +288,7 @@ comics:
     title: "Jucika going to a fashion show"
   - filename: "Fat.jpg"
     title: "Jucika's confidence"
-    sensitive: True
+    sensitive: true
   - filename: "FieldWork.jpg"
     title: "Jucika helps with threshing"
   - filename: "FinallySomeHeating.jpg"
@@ -303,7 +307,7 @@ comics:
     title: "Jucika in the under-construction apartment"
   - filename: "FlightAttendant2.jpg"
     title: "Jucika, the stylish flight attendant"
-    sensitive: True
+    sensitive: true
   - filename: "FlightAttendant.jpg"
     title: "Jucika as a flight attendant"
   - filename: "Flirt.jpg"
@@ -400,7 +404,7 @@ comics:
     title: "Jucika hurry"
   - filename: "Interview.jpg"
     title: "Jucika and the reporter"
-    sensitive: True
+    sensitive: true
   - filename: "Jealous.jpg"
     title: "Jucika is jealous"
   - filename: "Jealousy.jpg"
@@ -411,7 +415,7 @@ comics:
     title: "Jucika and the righteous conductor"
   - filename: "Kayak.jpg"
     title: "Jucika on a test drive"
-    sensitive: True
+    sensitive: true
   - filename: "KnittedCloth.jpg"
     title: "Jucika's knitted dress"
   - filename: "LastGuest.jpg"
@@ -428,7 +432,7 @@ comics:
     title: "Jucika and the lifeguards"
   - filename: "LifeSaver (2).jpg"
     title: "Jucika and the lifesaver"
-    sensitive: True
+    sensitive: true
   - filename: "LifeSaver.jpg"
     title: "Jucika saves a life"
   - filename: "LikesTheBeer.jpg"
@@ -489,7 +493,7 @@ comics:
     title: "Jucika's net"
   - filename: "NetSuit.jpg"
     title: "Jucika's mesh swimsuit"
-    sensitive: True
+    sensitive: true
   - filename: "NewBook.jpg"
     title: "Jucika and the new book"
   - filename: "NewPattern.jpg"
@@ -504,12 +508,12 @@ comics:
     title: "Jucika wants to sleep"
   - filename: "Nudist.jpg"
     title: "Jucika at the nude lake"
-    sensitive: True
+    sensitive: true
   - filename: "Obeys.jpg"
     title: "Jucika obeys"
   - filename: "ObligatoryCloakroom.jpg"
     title: "Jucika is upper class"
-    sensitive: True
+    sensitive: true
   - filename: "Office.jpg"
     title: "Jucika is exceptional"
   - filename: "OneJucikaDoesNotMakeASummer.jpg"
@@ -540,7 +544,7 @@ comics:
     title: "Jucika and the parrot"
   - filename: "Peach.jpg"
     title: "Jucika and the peach"
-    sensitive: True
+    sensitive: true
   - filename: "PedestrianCrossing.jpg"
     title: "Jucika and the \"zebra\""
   - filename: "PerfectHost.jpg"
@@ -611,7 +615,7 @@ comics:
     title: "Jucika the substitute"
   - filename: "ReturnFromVacation2.jpg"
     title: "Jucika arrives from vacation"
-    sensitive: True
+    sensitive: true
   - filename: "ReturnFromVacation.jpg"
     title: "Jucika has returned from her holiday"
   - filename: "Revenge.jpg"
@@ -657,7 +661,7 @@ comics:
     title: "Jucika and her husband at Vását"
   - filename: "Shopping.jpg"
     title: "Jucika shops"
-    sensitive: True
+    sensitive: true
   - filename: "ShopWindow.jpg"
     title: "Jucika organizes a shop window"
   - filename: "ShowWindow.jpg"
@@ -670,7 +674,7 @@ comics:
     title: "Jucika learns to skate"
   - filename: "Ski.jpg"
     title: "Jucika as a skier"
-    sensitive: True
+    sensitive: true
   - filename: "Skirt.jpg"
     title: "Jucika in a fahsionable skirt"
   - filename: "SleepingPill.jpg"
@@ -713,27 +717,27 @@ comics:
     title: "Jucika is changing"
   - filename: "SummerNight.jpg"
     title: "Jucika and the summer night"
-    sensitive: True
+    sensitive: true
   - filename: "SummerVacation.jpg"
     title: "Jucika and the vacationing children"
   - filename: "Sunbath2.jpg"
     title: "Jucika sunbathes"
-    sensitive: True
+    sensitive: true
   - filename: "Sunbath3.jpg"
     title: "Jucika is sunbathing"
   - filename: "Sunbath.jpg"
     title: "Jucika sunbathes"
-    sensitive: True
+    sensitive: true
   - filename: "SuperMini.jpg"
     title: "Jucika in a super miniskirt"
-    sensitive: True
+    sensitive: true
   - filename: "SurrogateMother.jpg"
     title: "Jucika the mother"
   - filename: "Suspicion.jpg"
     title: "Jucika has a suspicion"
   - filename: "SwimsuitFashion.jpg"
     title: "Jucika presents the new swimwear fashion"
-    sensitive: True
+    sensitive: true
   - filename: "SwimsuitTryOn.jpg"
     title: "Jucika tries on a bathing suit"
   - filename: "TactfulWorker.jpg"
@@ -752,7 +756,7 @@ comics:
     title: "Jucika and the magic of TV"
   - filename: "Television.jpg"
     title: "Jucika and the television"
-    sensitive: True
+    sensitive: true
   - filename: "TemptingSummer.jpg"
     title: "Jucika and the seductive film"
   - filename: "TheAbsoluteGentleman.jpg"
@@ -777,7 +781,7 @@ comics:
     title: "Jucika and the tight skirt"
   - filename: "Timelapse.jpg"
     title: "Jucika over the years"
-    sensitive: True
+    sensitive: true
   - filename: "ToBalaton.jpg"
     title: "Jucika is heading to Balatona"
   - filename: "tom-cat.jpg"
@@ -798,14 +802,14 @@ comics:
     title: "Jucika and the alibi umbrella"
   - filename: "UnexpectedGuest.jpg"
     title: "Jucika and the unexpected guest"
-    sensitive: True
+    sensitive: true
   - filename: "Ungrateful.jpg"
     title: "Jucika is ungrateful"
   - filename: "Usher.jpg"
     title: "Jucika as an usher"
   - filename: "Vacation2.jpg"
     title: "Jucika on vacation"
-    sensitive: True
+    sensitive: true
   - filename: "Vacation.jpg"
     title: "Jucika goes to bed"
   - filename: "Vain.jpg"
@@ -827,7 +831,7 @@ comics:
     title: "Jucika and the big wash"
   - filename: "Washday.jpg"
     title: "Jucika and the deep wash"
-    sensitive: True
+    sensitive: true
   - filename: "Wave.jpg"
     title: "Jucika in the wave"
   - filename: "Weather.jpg"

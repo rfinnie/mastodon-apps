@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # SPDX-FileComment: Mastodon bot
 # SPDX-FileCopyrightText: Copyright (C) 2023 Ryan Finnie
 # SPDX-License-Identifier: MPL-2.0
@@ -45,9 +43,7 @@ class BaseMastodon:
             prog=pathlib.Path(argv[0]).name,
         )
 
-        parser.add_argument(
-            "--debug", action="store_true", help="Print debugging information"
-        )
+        parser.add_argument("--debug", action="store_true", help="Print debugging information")
 
         parser.add_argument(
             "--config",
@@ -156,13 +152,7 @@ class BaseMastodon:
         logging_level = logging.DEBUG if self.args.debug else logging.INFO
         logging.basicConfig(format=logging_format, level=logging_level)
         if not self.args.config:
-            self.args.config.append(
-                str(
-                    pathlib.Path(self.calling_file)
-                    .absolute()
-                    .parent.joinpath("{}.yaml".format(self.name))
-                )
-            )
+            self.args.config.append(str(pathlib.Path(self.calling_file).absolute().parent.joinpath("{}.yaml".format(self.name))))
 
         def merge_dicts(dest, source):
             for k, v in source.items():
@@ -179,9 +169,7 @@ class BaseMastodon:
         self.url_base = self.config["url_base"]
 
         self.server = self.api("{}/api/v2/instance".format(self.url_base))
-        self.me = self.api(
-            "{}/api/v1/accounts/verify_credentials".format(self.url_base)
-        )
+        self.me = self.api("{}/api/v1/accounts/verify_credentials".format(self.url_base))
 
         self.setup()
 
