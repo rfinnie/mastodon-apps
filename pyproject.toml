@@ -18,6 +18,7 @@ dependencies = [
     'backports.zoneinfo; python_version<"3.9"',
     "beautifulsoup4",
     "blurhash-python",
+    "lxml",
     "python-dateutil",
     "requests",
     "urlextract",
