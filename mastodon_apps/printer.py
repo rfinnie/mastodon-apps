@@ -76,10 +76,13 @@ class Printer(BaseMastodon):
             self.logger.info("Favorited {}".format(status["url"]))
 
     def process_update(self, status):
-        if (not status["reblog"]) and ("posts" not in self.config["mode"]):
-            return
-        if status["reblog"] and ("boosts" not in self.config["mode"]):
-            return
+        if status["reblog"]:
+            if "boosts" not in self.config["mode"]:
+                return
+            status = status["reblog"]
+        else:
+            if "posts" not in self.config["mode"]:
+                return
         self.print_status(status)
 
     def extract_urls(self, line):
