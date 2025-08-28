@@ -78,7 +78,7 @@ class Printer(BaseMastodon):
     def process_update(self, status):
         if (not status["reblog"]) and ("posts" not in self.config["mode"]):
             return
-        if status["reblog"]("boosts" not in self.config["mode"]):
+        if status["reblog"] and ("boosts" not in self.config["mode"]):
             return
         self.print_status(status)
 
