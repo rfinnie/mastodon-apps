@@ -25,6 +25,12 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[tool.setuptools.packages.find]
+include = [
+    "mastodon_apps",
+    "mastodon_apps.mastodon",
+]
+
 [project.scripts]
 mastodon-app-eightfortyseven = "mastodon_apps.eightfortyseven:main"
 mastodon-app-fish = "mastodon_apps.fish:main"
