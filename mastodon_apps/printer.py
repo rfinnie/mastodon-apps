@@ -37,6 +37,11 @@ class Printer(BaseMastodon):
         else:
             self.url_extractor = URLExtract(cache_dns=False)
 
+        if self.config.get("mode") is None:
+            self.config["mode"] = ["mentions"]
+        if not isinstance(self.config["mode"], (list, tuple)):
+            self.config["mode"] = [self.config["mode"]]
+
     def tobin(self, data):
         if not isinstance(data, (list, tuple)):
             data = [data]
@@ -58,15 +63,22 @@ class Printer(BaseMastodon):
         return out
 
     def process_mention(self, mention):
-        if self.config.get("mode", "mentions") != "mentions":
+        if "mentions" not in self.config["mode"]:
             return
         status = mention["status"]
         self.print_status(status)
 
+        if self.config.get("favorite_printed", True) and (not status["in_reply_to_id"]):
+            self.api(
+                "{}/api/v1/statuses/{}/favourite".format(self.url_base, status["id"]),
+                method="POST",
+            )
+            self.logger.info("Favorited {}".format(status["url"]))
+
     def process_update(self, status):
-        if self.config.get("mode", "mentions") != "updates":
+        if (not status["reblog"]) and ("posts" not in self.config["mode"]):
             return
-        if status["reblog"]:
+        if status["reblog"]("boosts" not in self.config["mode"]):
             return
         self.print_status(status)
 
@@ -161,13 +173,6 @@ class Printer(BaseMastodon):
             sock.send(out)
             sock.close()
         self.logger.info("Print sent to printer, {} bytes".format(len(out)))
-
-        if self.config.get("favorite_printed", True) and (not status["in_reply_to_id"]):
-            self.api(
-                "{}/api/v1/statuses/{}/favourite".format(self.url_base, status["id"]),
-                method="POST",
-            )
-            self.logger.info("Favorited {}".format(status["url"]))
 
     def render_image(self, im):
         if im.width > 256 or im.height > 256:
