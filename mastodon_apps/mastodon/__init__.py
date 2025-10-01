@@ -69,10 +69,13 @@ class BaseMastodon:
 
     def stream_listen(self):
         message = {}
+        # Timeout is applied both to the GET, and (more importantly) stream reads.
+        # Mastodon sends a keepalive (starts with ":") every 15 seconds, so 120 is safe.
         r = self.stream_session.get(
             "{}/api/v1/streaming/user".format(self.url_base),
             headers={"Authorization": "Bearer {}".format(self.config["bearer_token"])},
             stream=True,
+            timeout=120,
         )
         r.raise_for_status()
         for line in self.stream_iter_lines(r):
