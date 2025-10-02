@@ -2,6 +2,8 @@
 # SPDX-FileCopyrightText: Copyright (C) 2023 Ryan Finnie
 # SPDX-License-Identifier: MPL-2.0
 
+# https://escpos.readthedocs.io/en/latest/commands.html
+
 import io
 import logging
 import socket
@@ -23,6 +25,14 @@ except ImportError as e:
     blurhash = e
 
 from .mastodon import BaseMastodon
+
+
+# https://escpos.readthedocs.io/en/latest/font_cmds.html#b21
+ESCPOS_RESET = b"\x1b\x21\x00"
+ESCPOS_BOLD = b"\x1b\x21\x08"  # 08: bold
+ESCPOS_TITLE = b"\x1b\x21\x38"  # 38: bold, double height, double width
+# https://escpos.readthedocs.io/en/latest/font_cmds.html#b40
+ESCPOS_INIT = b"\x1b\x40"
 
 
 class Printer(BaseMastodon):
@@ -103,13 +113,13 @@ class Printer(BaseMastodon):
         )
         self.logger.info("Post: {}".format(status["url"]))
         out = []
-        out.extend([b"\x1b!\x38", self.server["title"], b"\x1b!\x00\n\n"])
+        out.extend([ESCPOS_TITLE, self.server["title"], ESCPOS_RESET, b"\n\n"])
         out.extend(
             [
                 "From: ",
-                b"\x1b!\x08",
+                ESCPOS_BOLD,
                 status["account"]["display_name"],
-                b"\x1b!\x00",
+                ESCPOS_RESET,
                 " (@{})\n".format(status["account"]["acct"]),
             ]
         )
@@ -121,9 +131,9 @@ class Printer(BaseMastodon):
             out.extend(
                 [
                     "Mentions: ",
-                    b"\x1b!\x08",
+                    ESCPOS_BOLD,
                     "@" + other_mention["acct"],
-                    b"\x1b!\x00",
+                    ESCPOS_RESET,
                 ]
             )
             if other_mention["id"] == status["in_reply_to_account_id"]:
@@ -163,8 +173,12 @@ class Printer(BaseMastodon):
             out.append(self.get_qrcode_bin(url))
             out.append(b"\n\n")
 
-        out.append(b"\x1b@")  # Reset
-        out.append(b"\x1dVB\x96")  # Paper cut, 5 lines bottom margin
+        out.append(ESCPOS_INIT)  # Initialize
+        # https://escpos.readthedocs.io/en/latest/paper_movement.html#d56 doesn't list 42 96
+        # Several random search results reveal 42 00 being a thing.
+        # The last number appears to be extra margin before cut; 96 is needed to make the
+        # bottom margin about the same as the top.
+        out.append(b"\x1d\x56\x42\x96")  # Paper cut, 5 lines bottom margin
         out = self.tobin(out)
 
         if self.config.get("printer_device"):
@@ -185,7 +199,8 @@ class Printer(BaseMastodon):
 
         (width, height) = im.size
         width_bytes = (int)((width + 7) / 8)
-        header = b"\x1dv0\x03" + bytearray(
+        # https://escpos.readthedocs.io/en/latest/imaging.html#d7630
+        header = b"\x1d\x76\x30\x03" + bytearray(
             [
                 width_bytes % 256,
                 width_bytes >> 8,
@@ -218,17 +233,18 @@ class Printer(BaseMastodon):
         return out
 
     def get_qrcode_bin(self, payload):
+        # https://escpos.readthedocs.io/en/latest/imaging.html#d286b
         out = (
-            b"\x1d(k\x04\x00\x31\x41\x32\x00"  # QR model 2
-            + b"\x1d(k\x03\x00\x31\x43\x0a"  # QR size 10 dots
-            + b"\x1d(k\x03\x00\x31\x45\x31"  # QR error correction level M (15%)
+            b"\x1d\x28\x6b\x04\x00\x31\x41\x32\x00"  # QR model 2
+            + b"\x1d\x28\x6b\x03\x00\x31\x43\x0a"  # QR size 10 dots
+            + b"\x1d\x28\x6b\x03\x00\x31\x45\x31"  # QR error correction level M (15%)
         )
         a = payload.encode("UTF-8")
         store_len = len(a) + 3
         pl = store_len % 256
         ph = int(store_len / 256)
-        out += b"\x1d(k" + bytes([pl, ph]) + b"\x31\x50\x30" + a  # QR store
-        out += b"\x1d(k\x03\x00\x31\x51\x30"  # QR print
+        out += b"\x1d\x28\x6b" + bytes([pl, ph]) + b"\x31\x50\x30" + a  # QR store
+        out += b"\x1d\x28\x6b\x03\x00\x31\x51\x30"  # QR print
         return out
 
 
