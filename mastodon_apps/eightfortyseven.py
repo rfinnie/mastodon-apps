@@ -22,21 +22,24 @@ class EightFortySeven(BaseMastodon):
     name = "eightfortyseven"
     calling_file = __file__
 
-    tz = zoneinfo.ZoneInfo("America/Denver")
-    hm = (8, 47)
-    prep = datetime.timedelta(minutes=15)
     current_temp = None
     high_temp = None
 
+    def add_app_args(self, parser):
+        parser.add_argument("--dry-run", action="store_true", help="Do not post")
+        parser.add_argument("--time", type=dateutil.parser.parse, default="8:47", help="Time to post")
+        parser.add_argument(
+            "--prep", type=lambda x: datetime.timedelta(minutes=float(x)), default="15", help="Minutes before post time to prep"
+        )
+        parser.add_argument("--timezone", type=zoneinfo.ZoneInfo, default="America/Denver", help="Timezone to post from")
+
     def run(self):
-        now = datetime.datetime.now().astimezone(self.tz)
-        # fudge = datetime.timedelta(minutes=2)
-        # self.hm = ((now + fudge).hour, (now + fudge).minute)
+        now = datetime.datetime.now().astimezone(self.args.timezone)
 
         self.today = now.replace(hour=0, minute=0, second=0, microsecond=0)
-        self.t_847 = self.today.replace(hour=self.hm[0], minute=self.hm[1])
+        self.t_847 = self.today.replace(hour=self.args.time.hour, minute=self.args.time.minute)
         self.t_848 = self.t_847 + datetime.timedelta(minutes=1)
-        self.t_prep = self.t_847 - self.prep
+        self.t_prep = self.t_847 - self.args.prep
 
         if now > self.t_848:
             self.logger.warning("Too late today to run, moving to tomorrow")
@@ -54,7 +57,7 @@ class EightFortySeven(BaseMastodon):
 
         # weather.gov API isn't very reliable, so keep trying ahead of time
         while True:
-            now = datetime.datetime.now().astimezone(self.tz)
+            now = datetime.datetime.now().astimezone(self.args.timezone)
             if now > self.t_848:
                 self.logger.error("Couldn't get temps in time")
                 return
@@ -65,7 +68,7 @@ class EightFortySeven(BaseMastodon):
                 continue
             break
 
-        now = datetime.datetime.now().astimezone(self.tz)
+        now = datetime.datetime.now().astimezone(self.args.timezone)
         if now < self.t_847:
             self.logger.debug("Waiting until {} to post".format(self.t_847))
             time.sleep((self.t_847 - now).total_seconds())
@@ -100,6 +103,10 @@ class EightFortySeven(BaseMastodon):
         post_text = "The time is 8:47 AM. Current topside temperature is {} degrees, with an estimated high of {}.".format(
             int(self.current_temp), int(self.high_temp)
         )
+
+        if self.args.dry_run:
+            self.logger.info("DRY RUN: Would post: {post_text}".format(post_text=post_text))
+            return
 
         self.api(
             "{}/api/v1/statuses".format(self.url_base),
