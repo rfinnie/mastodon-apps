@@ -65,6 +65,7 @@ class EightFortySeven(BaseMastodon):
                 continue
             break
 
+        now = datetime.datetime.now().astimezone(self.tz)
         if now < self.t_847:
             self.logger.debug("Waiting until {} to post".format(self.t_847))
             time.sleep((self.t_847 - now).total_seconds())
