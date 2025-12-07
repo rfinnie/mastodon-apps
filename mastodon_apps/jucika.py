@@ -7,6 +7,7 @@ import datetime
 import random
 import sys
 import time
+import zlib
 
 import dateutil.parser
 
@@ -22,10 +23,19 @@ class Jucika(BaseMastodon):
         parser.add_argument("--dry-run", action="store_true", help="Do not post")
         parser.add_argument("--datetime-override", help="Date/time override")
 
+    def get_seed(self):
+        seed = self.config.get("seed", 0)
+        if isinstance(seed, int):
+            return seed
+        elif isinstance(seed, bytes):
+            return zlib.crc32(seed)
+        else:
+            return zlib.crc32(str(seed).encode("UTF-8"))
+
     def get_day_comic(self, today):
         comics = copy.copy(self.config["comics"])
         day = (today - datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)).days
-        base_seed = self.config.get("seed", 0)
+        base_seed = self.get_seed()
         # Seed remains the same throughout the run of the comics,
         # but changes for the next run
         seed = base_seed + (day - (day % len(comics)))
