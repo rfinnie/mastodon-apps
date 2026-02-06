@@ -4,6 +4,8 @@
 
 import copy
 import datetime
+import mimetypes
+import pathlib
 import random
 import sys
 import time
@@ -46,6 +48,21 @@ class Jucika(BaseMastodon):
         self.logger.debug("{} is day {}; picked position {} with seed {}".format(today, day, pos, seed))
         return comic
 
+    def backoff_attachment(self, url, timeout=300):
+        begin = datetime.datetime.now()
+        wait_secs = 1
+        while True:
+            self.logger.debug("Waiting {}s for attachment processing".format(wait_secs))
+            time.sleep(wait_secs)
+            res = self.api(url, get_result=True)
+            if res.status_code == 200:
+                self.logger.debug("Attachment has processed")
+                return
+            self.logger.debug("Attachment has not yet processed (status code {})".format(res.status_code))
+            if (datetime.datetime.now() - begin) >= datetime.timedelta(seconds=timeout):
+                raise TimeoutError("Timed out waiting for attachment processing")
+            wait_secs *= 1.75
+
     def run(self):
         if self.args.datetime_override:
             today = dateutil.parser.parse(self.args.datetime_override)
@@ -70,27 +87,28 @@ class Jucika(BaseMastodon):
         if self.args.dry_run:
             return
 
-        fh = open("{}/{}".format(self.config["image_dir"], comic["filename"]), "rb")
+        f = pathlib.Path(self.config["image_dir"], comic["filename"])
+        fh = f.open(mode="rb")
         data = {}
         description = comic.get("description")
         if description:
             data["description"] = description
+        attachment_mime = mimetypes.guess_type(f.as_uri())[0]
+        attachment_filename = "attachment.{}".format(mimetypes.guess_extension(attachment_mime))
         res = self.api(
             "{}/api/v2/media".format(self.url_base),
             data=data,
             files={
-                "file": ("attachment.jpg", fh, "image/jpeg"),
+                "file": (attachment_filename, fh, attachment_mime),
             },
             method="POST",
             get_result=True,
         )
-        if res.status_code == 202:
-            # Attachment is still processing
-            # Ideally we should actually test when it's processed, but sleeping a minute is fast and easy
-            # https://docs.joinmastodon.org/methods/media/
-            time.sleep(60)
         j = res.json()
         attachment_id = j["id"]
+        if res.status_code == 202:
+            self.logger.debug("Attachment is still processing; checking status occasionally")
+            self.backoff_attachment("{}/api/v1/media/{}".format(self.url_base, attachment_id))
 
         data = [
             ("media_ids[]", attachment_id),
