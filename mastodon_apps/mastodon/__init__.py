@@ -26,6 +26,7 @@ class BaseMastodon:
     instance = None
     args = None
     config = None
+    listen = True
 
     def __init__(self):
         self.session = requests.Session()
@@ -146,7 +147,10 @@ class BaseMastodon:
     def setup(self):
         pass
 
-    def main(self, listen=True):
+    def run(self):
+        pass
+
+    def main(self):
         self.args = self.parse_args()
         self.logger = logging.getLogger(self.name)
         logging_format = "%(levelname)s:%(name)s:%(message)s"
@@ -176,8 +180,8 @@ class BaseMastodon:
 
         self.setup()
 
-        if not listen:
-            return
+        if not self.listen:
+            return self.run()
 
         while True:
             try:

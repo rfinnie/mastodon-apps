@@ -22,6 +22,7 @@ from .mastodon import BaseMastodon
 class EightFortySeven(BaseMastodon):
     name = "eightfortyseven"
     calling_file = __file__
+    listen = False
 
     current_temp = None
     high_temp = None
@@ -134,9 +135,7 @@ class EightFortySeven(BaseMastodon):
 
 
 def main():
-    bot = EightFortySeven()
-    bot.main(listen=False)
-    return bot.run()
+    return EightFortySeven().main()
 
 
 if __name__ == "__main__":

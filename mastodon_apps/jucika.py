@@ -7,10 +7,12 @@ import datetime
 import mimetypes
 import pathlib
 import random
+import re
 import sys
 import time
 import zlib
 
+from bs4 import BeautifulSoup
 import dateutil.parser
 
 from .mastodon import BaseMastodon
@@ -19,8 +21,16 @@ from .mastodon import BaseMastodon
 class Jucika(BaseMastodon):
     name = "jucika"
     calling_file = __file__
+    listen = True
+    re_strip_users = re.compile(r"^(\@[a-zA-Z0-9\.@\-_]+ +)+")
+    re_strip_dots = re.compile(r"^[\. ]+")
+
+    def setup(self):
+        if self.args.daily:
+            self.listen = False
 
     def add_app_args(self, parser):
+        parser.add_argument("--daily", action="store_true", help="Daily cron mode")
         parser.add_argument("--random", action="store_true", help="Truly random comic")
         parser.add_argument("--dry-run", action="store_true", help="Do not post")
         parser.add_argument("--datetime-override", help="Date/time override")
@@ -87,6 +97,9 @@ class Jucika(BaseMastodon):
         if self.args.dry_run:
             return
 
+        self.post_comic(comic)
+
+    def post_comic(self, comic, in_reply_to_id=None, status_prefix=None, visibility=None):
         f = pathlib.Path(self.config["image_dir"], comic["filename"])
         fh = f.open(mode="rb")
         data = {}
@@ -110,25 +123,50 @@ class Jucika(BaseMastodon):
             self.logger.debug("Attachment is still processing; checking status occasionally")
             self.backoff_attachment("{}/api/v1/media/{}".format(self.url_base, attachment_id))
 
+        if visibility is None:
+            visibility = self.config.get("visibility", "public")
         data = [
             ("media_ids[]", attachment_id),
             ("sensitive", ("true" if comic.get("sensitive") else "false")),
-            ("visibility", self.config.get("visibility", "public")),
+            ("visibility", visibility),
         ]
-        title = comic.get("title")
-        if title:
-            data.append(("status", title))
+        status = comic.get("title", "")
+        if status_prefix:
+            status = status_prefix + " " + status
+        status = status.strip()
+        if status:
+            data.append(("status", status))
+        if in_reply_to_id:
+            data.append(("in_reply_to_id", in_reply_to_id))
         self.api(
             "{}/api/v1/statuses".format(self.url_base),
             data=data,
             method="POST",
         )
 
+    def process_mention(self, mention):
+        soup = BeautifulSoup(mention["status"]["content"], features="lxml")
+        post_text = soup.get_text().strip()
+        post_text = self.re_strip_users.sub("", post_text).strip()
+        post_text = self.re_strip_dots.sub("", post_text).strip()
+        post_text = post_text.lower()
+        if "random" in post_text or "please" in post_text or "give me" in post_text or "another comic" in post_text:
+            comic = random.choice(self.config["comics"])
+            self.post_comic(
+                comic,
+                in_reply_to_id=mention["status"]["id"],
+                status_prefix="@{}".format(mention["status"]["account"]["acct"]),
+                visibility="unlisted",
+            )
+        elif "thank you" in post_text or "thanks" in post_text:
+            self.api(
+                "{}/api/v1/statuses/{}/favourite".format(self.url_base, mention["status"]["id"]),
+                method="POST",
+            )
+
 
 def main():
-    bot = Jucika()
-    bot.main(listen=False)
-    return bot.run()
+    return Jucika().main()
 
 
 if __name__ == "__main__":
