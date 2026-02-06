@@ -5,6 +5,7 @@
 # Run from cron at 1400Z, it will figure out correctly when to post
 
 import datetime
+import math
 import sys
 import time
 
@@ -61,12 +62,21 @@ class EightFortySeven(BaseMastodon):
             if now > self.t_848:
                 self.logger.error("Couldn't get temps in time")
                 return
+            try_again = False
             try:
-                self.get_temps()
+                self.get_current_temp()
             except Exception:
-                time.sleep(100)
-                continue
-            break
+                try_again = True
+            try:
+                self.get_high_temp()
+            except Exception:
+                try_again = True
+            if not try_again:
+                break
+            time.sleep(100)
+
+        if self.high_temp < self.current_temp:
+            self.high_temp = self.current_temp
 
         now = datetime.datetime.now().astimezone(self.args.timezone)
         if now < self.t_847:
@@ -74,13 +84,19 @@ class EightFortySeven(BaseMastodon):
             time.sleep((self.t_847 - now).total_seconds())
         self.post()
 
-    def get_temps(self):
+    def get_current_temp(self):
+        if self.current_temp is not None:
+            return
         res = self.session.get("https://api.weather.gov/stations/KCNM/observations/latest")
         res.raise_for_status()
         j = res.json()
         self.current_temp = int(j["properties"]["temperature"]["value"] * 1.8 + 32)
 
-        high_temp = 0
+    def get_high_temp(self):
+        if self.high_temp is not None:
+            return
+        ninf = -math.inf
+        high_temp = ninf
         res = self.session.get("https://api.weather.gov/gridpoints/MAF/42,155")
         res.raise_for_status()
         j = res.json()
@@ -94,10 +110,9 @@ class EightFortySeven(BaseMastodon):
             v = tv["value"] * 1.8 + 32
             if v > high_temp:
                 high_temp = v
+        if high_temp == ninf:
+            raise ValueError("High temp: no temperatures found")
         self.high_temp = high_temp
-
-        if self.high_temp < self.current_temp:
-            self.high_temp = self.current_temp
 
     def post(self):
         post_text = "The time is 8:47 AM. Current topside temperature is {} degrees, with an estimated high of {}.".format(
