@@ -1,5 +1,8 @@
+# SPDX-PackageName: mastodon-apps
+# SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
+# SPDX-PackageDownloadLocation: https://github.com/rfinnie/mastodon-apps
 # SPDX-FileComment: Jucika Mastodon bot
-# SPDX-FileCopyrightText: Copyright (C) 2025 Ryan Finnie
+# SPDX-FileCopyrightText: © 2025 Ryan Finnie <ryan@finnie.org>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Unless otherwise noted, all title translations were done by running the

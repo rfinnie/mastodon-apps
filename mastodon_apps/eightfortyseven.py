@@ -1,5 +1,8 @@
+# SPDX-PackageName: mastodon-apps
+# SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
+# SPDX-PackageDownloadLocation: https://github.com/rfinnie/mastodon-apps
 # SPDX-FileComment: 8:47 Mastodon bot
-# SPDX-FileCopyrightText: Copyright (C) 2024 Ryan Finnie
+# SPDX-FileCopyrightText: © 2024 Ryan Finnie <ryan@finnie.org>
 # SPDX-License-Identifier: MPL-2.0
 
 # Run from cron at 1400Z, it will figure out correctly when to post

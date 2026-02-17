@@ -10,6 +10,8 @@ A collection of personal Mastodon apps and bots.
 
 This document is provided under the following license:
 
-    SPDX-PackageSummary: finnix-live-build
-    SPDX-FileCopyrightText: Copyright (C) 2025 Ryan Finnie
+    SPDX-PackageName: mastodon-apps
+    SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
+    SPDX-PackageDownloadLocation: https://github.com/rfinnie/mastodon-apps
+    SPDX-FileCopyrightText: © 2025 Ryan Finnie <ryan@finnie.org>
     SPDX-License-Identifier: CC-BY-SA-4.0
