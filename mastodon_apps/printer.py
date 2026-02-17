@@ -29,7 +29,6 @@ except ImportError as e:
 
 from .mastodon import BaseMastodon
 
-
 # https://escpos.readthedocs.io/en/latest/font_cmds.html#b21
 ESCPOS_RESET = b"\x1b\x21\x00"
 ESCPOS_BOLD = b"\x1b\x21\x08"  # 08: bold
@@ -200,7 +199,7 @@ class Printer(BaseMastodon):
         bitmap = im.convert("L")  # greyscale
         bitmap = ImageOps.invert(bitmap).convert("1")  # invert + bitmap
 
-        (width, height) = im.size
+        width, height = im.size
         width_bytes = (int)((width + 7) / 8)
         # https://escpos.readthedocs.io/en/latest/imaging.html#d7630
         header = b"\x1d\x76\x30\x03" + bytearray(
