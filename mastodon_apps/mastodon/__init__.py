@@ -7,6 +7,7 @@
 
 import argparse
 import base64
+import datetime
 import hashlib
 import hmac
 import json
@@ -30,6 +31,10 @@ class BaseMastodon:
     args = None
     config = None
     listen = True
+    stream_start = None
+    stream_last_message = None
+    lifetime_seconds = 7200
+    lifetime_idle_seconds = 600
 
     def __init__(self):
         self.session = requests.Session()
@@ -70,6 +75,8 @@ class BaseMastodon:
             buf = raw_lines[-1]
             for line in [line.decode("UTF-8") for line in raw_lines[:-1]]:
                 yield line
+            if (datetime.datetime.now(datetime.UTC) - self.stream_start) > datetime.timedelta(seconds=self.lifetime_seconds):
+                raise TimeoutError("Stream lifetime is stale")
 
     def stream_listen(self):
         message = {}
@@ -82,14 +89,24 @@ class BaseMastodon:
             timeout=120,
         )
         r.raise_for_status()
+        self.stream_start = datetime.datetime.now(datetime.UTC)
         for line in self.stream_iter_lines(r):
             if line.startswith(":"):
+                self.logger.debug("Received Mastodon streaming keepalive")
+                self.on_keepalive()
+                if (
+                    datetime.datetime.now(datetime.UTC)
+                    - (self.stream_last_message if self.stream_last_message else self.stream_start)
+                ) > datetime.timedelta(seconds=self.lifetime_idle_seconds):
+                    raise TimeoutError("Stream idle is stale")
                 continue
             line = line.strip()
             if line:
                 k, v = line.split(": ", 1)
+                self.logger.debug("Received Mastodon streaming {}".format(k))
                 message[k] = v
                 continue
+            self.stream_last_message = datetime.datetime.now(datetime.UTC)
             try:
                 self.process_message(message)
             except Exception:
@@ -113,6 +130,9 @@ class BaseMastodon:
         pass
 
     def process_update(self, status):
+        pass
+
+    def on_keepalive(self):
         pass
 
     def api(self, url, method="GET", data=None, files=None, get_result=False):
@@ -189,6 +209,8 @@ class BaseMastodon:
         while True:
             try:
                 self.stream_listen()
+            except TimeoutError as e:
+                self.logger.debug("Timeout: {}".format(e))
             except requests.exceptions.ChunkedEncodingError:
                 self.logger.warning("Received chunked encoding error, resetting")
             except Exception:

@@ -58,7 +58,7 @@ class Jucika(BaseMastodon):
         rand.shuffle(comics)
         pos = day % len(comics)
         comic = comics[pos]
-        self.logger.debug("{} is day {}; picked position {} with seed {}".format(today, day, pos, seed))
+        self.logger.debug("{} is day {}; picked position {}/{} with seed {}".format(today, day, pos, len(comics), seed))
         return comic
 
     def backoff_attachment(self, url, timeout=300):
