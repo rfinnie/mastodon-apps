@@ -90,6 +90,7 @@ class BaseMastodon:
         )
         r.raise_for_status()
         self.stream_start = datetime.datetime.now(datetime.UTC)
+        self.stream_last_message = None
         for line in self.stream_iter_lines(r):
             if line.startswith(":"):
                 self.logger.debug("Received Mastodon streaming keepalive")
