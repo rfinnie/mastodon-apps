@@ -12,6 +12,6 @@ This document is provided under the following license:
 
     SPDX-PackageName: mastodon-apps
     SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
-    SPDX-PackageDownloadLocation: https://codeberg.org/rfinnie/mastodon-apps
+    SPDX-PackageDownloadLocation: https://forge.colobox.com/rfinnie/mastodon-apps
     SPDX-FileCopyrightText: © 2025 Ryan Finnie <ryan@finnie.org>
     SPDX-License-Identifier: CC-BY-SA-4.0

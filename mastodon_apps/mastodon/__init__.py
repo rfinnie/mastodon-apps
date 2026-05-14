@@ -1,6 +1,6 @@
 # SPDX-PackageName: mastodon-apps
 # SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
-# SPDX-PackageDownloadLocation: https://codeberg.org/rfinnie/mastodon-apps
+# SPDX-PackageDownloadLocation: https://forge.colobox.com/rfinnie/mastodon-apps
 # SPDX-FileComment: Mastodon bot
 # SPDX-FileCopyrightText: © 2023 Ryan Finnie <ryan@finnie.org>
 # SPDX-License-Identifier: MPL-2.0
