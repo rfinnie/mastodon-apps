@@ -37,8 +37,15 @@ class BaseMastodon:
     lifetime_idle_seconds = 600
 
     def __init__(self):
+        url = "https://forge.colobox.com/rfinnie/mastodon-apps"
         self.session = requests.Session()
+        self.session.headers.update(
+            {"User-Agent": "{} (mastodon-apps {}; +{})".format(self.name, requests.utils.default_user_agent(), url)}
+        )
         self.stream_session = requests.Session()
+        self.stream_session.headers.update(
+            {"User-Agent": "{} (mastodon-apps {}; +{})".format(self.name, requests.utils.default_user_agent(), url)}
+        )
 
     def add_app_args(self, parser):
         pass
