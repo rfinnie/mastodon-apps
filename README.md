@@ -1,5 +1,8 @@
 # Mastodon apps
 
+[![Git forge repository](https://img.shields.io/badge/git-forge-orange?logo=forgejo)](https://forge.colobox.com/rfinnie/mastodon-apps)
+[![CI pipeline status](https://woodpecker.colobox.com/api/badges/48/status.svg)](https://woodpecker.colobox.com/repos/48)
+
 A collection of personal Mastodon apps and bots.
 
 * [8:47 AM](https://botsin.space/@847)
