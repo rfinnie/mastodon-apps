@@ -143,17 +143,24 @@ class BaseMastodon:
     def on_keepalive(self):
         pass
 
-    def api(self, url, method="GET", data=None, files=None, get_result=False):
-        # Note that this is not cryptographically safe, just to prevent
-        # accidental replays.
-        # https://docs.joinmastodon.org/methods/statuses/#headers
-        idempotency_id = base64.b64encode(
-            hmac.HMAC(
-                self.idempotency_key.encode("UTF-8"),
-                msg=pickle.dumps((url, method, data)),
-                digestmod=hashlib.sha256,
-            ).digest()
-        ).decode("UTF-8")
+    def api(self, url, method="GET", data=None, files=None, get_result=False, idempotency=None):
+        headers = {
+            "Authorization": "Bearer {}".format(self.config["bearer_token"]),
+        }
+        if idempotency is None:
+            idempotency = method == "post"
+        if idempotency:
+            # Note that this is not cryptographically safe, just to prevent
+            # accidental replays.
+            # https://docs.joinmastodon.org/methods/statuses/#headers
+            idempotency_id = base64.b64encode(
+                hmac.HMAC(
+                    self.idempotency_key.encode("UTF-8"),
+                    msg=pickle.dumps((url, method, data)),
+                    digestmod=hashlib.sha256,
+                ).digest()
+            ).decode("UTF-8")
+            headers["Idempotency-Key"] = idempotency_id
 
         kwargs = {}
         if data:
@@ -163,10 +170,7 @@ class BaseMastodon:
         r = self.session.request(
             method,
             url,
-            headers={
-                "Authorization": "Bearer {}".format(self.config["bearer_token"]),
-                "Idempotency-Key": idempotency_id,
-            },
+            headers=headers,
             **kwargs,
         )
         r.raise_for_status()
