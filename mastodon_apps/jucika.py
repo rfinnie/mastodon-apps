@@ -52,7 +52,8 @@ class Jucika(BaseMastodon):
         comics = copy.copy(self.config["comics"])
         day = (today - datetime.datetime(2020, 1, 1, tzinfo=datetime.timezone.utc)).days
         seed = self.get_seed()
-        rand = random.Random(seed)
+        rand = random.Random()
+        rand.seed(seed, version=2)
 
         # In principle, this is terribly inefficient and would be better to keep state between runs.
         # In practice, it takes microseconds per function call now, and will start taking milliseconds in about 50 years.
