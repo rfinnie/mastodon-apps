@@ -64,13 +64,12 @@ class Jucika(BaseMastodon):
         # This is only used for debugging, to see when the currently picked comic will occur next.
         ahead_comics = copy.copy(comics)
         ahead_day = 0
-        while True:
+        ahead_comic = None
+        while comic != ahead_comic:
             ahead_day += 1
             insert_pos = rand.randint(0, int(len(ahead_comics) / 2) - 1)
             ahead_comic = ahead_comics.pop()
             ahead_comics.insert(insert_pos, ahead_comic)
-            if comic == ahead_comic:
-                break
         time_end = datetime.datetime.now()
 
         self.logger.debug(
