@@ -212,6 +212,7 @@ class BaseMastodon:
 
         self.server = self.api("{}/api/v2/instance".format(self.url_base))
         self.me = self.api("{}/api/v1/accounts/verify_credentials".format(self.url_base))
+        self.logger.debug("I am {} ({})".format(self.me["display_name"], self.me["username"]))
 
         self.setup()
 
