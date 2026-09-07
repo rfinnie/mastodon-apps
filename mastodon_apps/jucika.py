@@ -48,42 +48,18 @@ class Jucika(BaseMastodon):
             return zlib.crc32(str(seed).encode("UTF-8"))
 
     def get_day_comic(self, today):
-        time_begin = datetime.datetime.now()
         comics = copy.copy(self.config["comics"])
-        day = (today - datetime.datetime(2020, 1, 1, tzinfo=datetime.timezone.utc)).days
-        seed = self.get_seed()
+        day = (today - datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)).days
+        base_seed = self.get_seed()
+        # Seed remains the same throughout the run of the comics,
+        # but changes for the next run
+        seed = base_seed + (day - (day % len(comics)))
         rand = random.Random()
         rand.seed(seed, version=2)
-
-        # In principle, this is terribly inefficient and would be better to keep state between runs.
-        # In practice, it takes microseconds per function call now, and will start taking milliseconds in about 50 years.
-        for _ in range(day):
-            insert_pos = rand.randint(0, int(len(comics) / 2) - 1)
-            comic = comics.pop()
-            comics.insert(insert_pos, comic)
-
-        # This is only used for debugging, to see when the currently picked comic will occur next.
-        ahead_comics = copy.copy(comics)
-        ahead_day = 0
-        ahead_comic = None
-        while comic != ahead_comic:
-            ahead_day += 1
-            insert_pos = rand.randint(0, int(len(ahead_comics) / 2) - 1)
-            ahead_comic = ahead_comics.pop()
-            ahead_comics.insert(insert_pos, ahead_comic)
-        time_end = datetime.datetime.now()
-
-        self.logger.debug(
-            "{today}, day {day}, picked {pos}/{total}, next {next}, seed {seed}, took {took}".format(
-                today=today,
-                day=day,
-                pos=(self.config["comics"].index(comic) + 1),
-                total=len(comics),
-                next=(today + datetime.timedelta(days=ahead_day)),
-                seed=seed,
-                took=(time_end - time_begin).total_seconds(),
-            )
-        )
+        rand.shuffle(comics)
+        pos = day % len(comics)
+        comic = comics[pos]
+        self.logger.debug("{} is day {}; picked position {}/{} with seed {}".format(today, day, pos, len(comics), seed))
         return comic
 
     def backoff_attachment(self, url, timeout=300):
