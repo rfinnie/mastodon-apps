@@ -5,7 +5,6 @@
 # SPDX-FileCopyrightText: © 2025 Ryan Finnie <ryan@finnie.org>
 # SPDX-License-Identifier: MPL-2.0
 
-import copy
 import datetime
 import mimetypes
 import pathlib
@@ -47,19 +46,41 @@ class Jucika(BaseMastodon):
         else:
             return zlib.crc32(str(seed).encode("UTF-8"))
 
+    def get_comics(self, get_generation):
+        out = []
+        for comic in self.config["comics"]:
+            generation = comic.get("generation", 1)
+            if generation > get_generation:
+                continue
+            out.append(comic)
+        return out
+
+    def get_generation(self, day):
+        generations = self.config.get("generations", [{"generation": 1, "day": 0}])
+        for g in sorted(generations, key=lambda x: x["generation"], reverse=True):
+            if g["day"] <= day:
+                return g["generation"]
+        return 1
+
     def get_day_comic(self, today):
-        comics = copy.copy(self.config["comics"])
         day = (today - datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)).days
+        generation = self.get_generation(day)
+        comics = self.get_comics(generation)
         base_seed = self.get_seed()
         # Seed remains the same throughout the run of the comics,
         # but changes for the next run
-        seed = base_seed + (day - (day % len(comics)))
+        day_base = day - (day % len(comics))
+        seed = base_seed + day_base
         rand = random.Random()
         rand.seed(seed, version=2)
         rand.shuffle(comics)
         pos = day % len(comics)
         comic = comics[pos]
-        self.logger.debug("{} is day {}; picked position {}/{} with seed {}".format(today, day, pos, len(comics), seed))
+        self.logger.debug(
+            "{} is generation {}, {} base -> {} day; picked position {}/{} with seed {}".format(
+                today, generation, day_base, day, pos, len(comics), seed
+            )
+        )
         return comic
 
     def backoff_attachment(self, url, timeout=300):
