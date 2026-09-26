@@ -115,14 +115,38 @@ class Jucika(BaseMastodon):
             comic = self.get_day_comic(today)
             next_comic = self.get_day_comic(tomorrow)
 
-        self.logger.info("Posting for today ({}): {}: {}".format(today, comic["filename"], comic.get("title")))
+        def get_desc(comic):
+            if comic.get("boost"):
+                desc = "Boost: {}".format(comic["boost"])
+            else:
+                desc = "Post: {} - {}".format(comic["filename"], comic.get("title"))
+            return desc
+
+        self.logger.info("Today ({}): {}".format(today, get_desc(comic)))
         if next_comic:
-            self.logger.info("Tomorrow ({}) will be: {}: {}".format(tomorrow, next_comic["filename"], next_comic.get("title")))
+            self.logger.info("Tomorrow ({}): {}".format(today, get_desc(next_comic)))
 
         if self.args.dry_run:
             return
 
-        self.post_comic(comic)
+        if comic.get("boost"):
+            if "/" in comic["boost"]:
+                # Allow full URL for posterity, but only needs the ID
+                boost_id = comic["boost"].split("/")[-1]
+            else:
+                boost_id = str(comic["boost"])
+            # "unreblog" is idempotent
+            self.api(
+                "{}/api/v1/statuses/{}/unreblog".format(self.url_base, boost_id),
+                method="POST",
+            )
+            self.api(
+                "{}/api/v1/statuses/{}/reblog".format(self.url_base, boost_id),
+                method="POST",
+            )
+            return
+        else:
+            self.post_comic(comic)
 
     def post_comic(self, comic, in_reply_to_id=None, status_prefix=None, visibility=None):
         f = pathlib.Path(self.config["image_dir"], comic["filename"])
