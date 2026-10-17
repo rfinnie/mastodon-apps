@@ -10,858 +10,1272 @@
 # someone who doesn't understand Hungarian.
 ---
 comics:
-  - filename: "6'2.jpg"
+  - attachments:
+      - filename: "6'2.jpg"
     title: "Jucika is having a ball"
-  - filename: "AboutFriendship.jpg"
+  - attachments:
+      - filename: "AboutFriendship.jpg"
     title: "Jucika and love"
-  - filename: "AccidentPrecention.jpg"
+  - attachments:
+      - filename: "AccidentPrecention.jpg"
     title: "Jucika and accident protection"
-  - filename: "AccidentProtection.jpg"
+  - attachments:
+      - filename: "AccidentProtection.jpg"
     title: "Jucika and accident protection"
-  - filename: "AffraidOfMud.jpg"
+  - attachments:
+      - filename: "AffraidOfMud.jpg"
     title: "Jucika afraid of mud"
-  - filename: "AgainstProtection.jpg"
+  - attachments:
+      - filename: "AgainstProtection.jpg"
     title: "Jucika against protection"
-  - filename: "Air(wo)man.jpg"
+  - attachments:
+      - filename: "Air(wo)man.jpg"
     title: "Jucika and national defense"
-  - filename: "Algebra.jpg"
+  - attachments:
+      - filename: "Algebra.jpg"
     title: "Jucika and the algebra rifle"
-  - filename: "AmongWaves.jpg"
+  - attachments:
+      - filename: "AmongWaves.jpg"
     title: "Jucika in the wave"
-  - filename: "Amore.jpg"
+  - attachments:
+      - filename: "Amore.jpg"
     title: "Jucika it's love"
-  - filename: "AmusementPark.jpg"
+  - attachments:
+      - filename: "AmusementPark.jpg"
     title: "Jucika in Vidám Park"
-  - filename: "AnnouncingTheWinner.jpg"
+  - attachments:
+      - filename: "AnnouncingTheWinner.jpg"
     title: "Jucika and the results announcement ceremony"
-  - filename: "AprilWind.jpg"
+  - attachments:
+      - filename: "AprilWind.jpg"
     title: "Jucika and the April wind"
-  - filename: "Archeologist.jpg"
+  - attachments:
+      - filename: "Archeologist.jpg"
     title: "Jucika is doing archaeology"
-  - filename: "Art.jpg"
+  - attachments:
+      - filename: "Art.jpg"
     title: "Jucika gets an explanation"
-  - filename: "AssemblyLine.jpg"
+  - attachments:
+      - filename: "AssemblyLine.jpg"
     title: "Jucika on the assembly line"
-  - filename: "Assistant.jpg"
+  - attachments:
+      - filename: "Assistant.jpg"
     title: "Jucika as an assistant"
-  - filename: "ATrueGentleman.jpg"
+  - attachments:
+      - filename: "ATrueGentleman.jpg"
     title: "Jucika and the attentive man"
-  - filename: "AtSchool.jpg"
+  - attachments:
+      - filename: "AtSchool.jpg"
     title: "Jucika is studying"
-  - filename: "AtSzeged.jpg"
+  - attachments:
+      - filename: "AtSzeged.jpg"
     title: "Jucika in Szeged"
-  - filename: "AtTheBeach.jpg"
+  - attachments:
+      - filename: "AtTheBeach.jpg"
     title: "Jucika goes to the beach"
-  - filename: "AtTheCamping.jpg"
+  - attachments:
+      - filename: "AtTheCamping.jpg"
     title: "Jucika goes camping"
-  - filename: "AtTheClothStore.jpg"
+  - attachments:
+      - filename: "AtTheClothStore.jpg"
     title: "Jucika at the clothing store"
-  - filename: "AtTheCountry2.jpg"
+  - attachments:
+      - filename: "AtTheCountry2.jpg"
     title: "Jucika village"
-  - filename: "AtTheCountry.jpg"
+  - attachments:
+      - filename: "AtTheCountry.jpg"
     title: "Jucika in rural Szállás"
-  - filename: "AtTheLibrary.jpg"
+  - attachments:
+      - filename: "AtTheLibrary.jpg"
     title: "Jucika in a library"
-  - filename: "AtTheMuseum.jpg"
+  - attachments:
+      - filename: "AtTheMuseum.jpg"
     title: "Jucika museum"
     sensitive: true
-  - filename: "AtWork.jpg"
+  - attachments:
+      - filename: "AtWork.jpg"
     title: "Jucika and the professional"
-  - filename: "AutographHunter.jpg"
+  - attachments:
+      - filename: "AutographHunter.jpg"
     title: "Jucika as an autograph hunter"
-  - filename: "AutumnLeaves.jpg"
+  - attachments:
+      - filename: "AutumnLeaves.jpg"
     title: "Jucika and the autumn foliage"
-  - filename: "BadLuck.jpg"
+  - attachments:
+      - filename: "BadLuck.jpg"
     title: "Jucika unlucky"
-  - filename: "Ball.jpg"
+  - attachments:
+      - filename: "Ball.jpg"
     title: "Jucika and the magic of the ball"
-  - filename: "Basketball.jpg"
+  - attachments:
+      - filename: "Basketball.jpg"
     title: "Jucika throws a basket"
     sensitive: true
-  - filename: "Basket.jpg"
+  - attachments:
+      - filename: "Basket.jpg"
     title: "Jucika and the canning"
-  - filename: "BathTime.jpg"
+  - attachments:
+      - filename: "BathTime.jpg"
     title: "Jucika wants to warm up"
-  - filename: "BestOfHealthCard.jpg"
+  - attachments:
+      - filename: "BestOfHealthCard.jpg"
     title: "Jucika name day"
-  - filename: "BetterUseOfWorktime.jpg"
+  - attachments:
+      - filename: "BetterUseOfWorktime.jpg"
     title: "Jucika forward for better use of your work"
-  - filename: "BicycleInstructor.jpg"
+  - attachments:
+      - filename: "BicycleInstructor.jpg"
     title: "Jucika is learning to ride a bicycle"
-  - filename: "BigCatch.jpg"
+  - attachments:
+      - filename: "BigCatch.jpg"
     title: "Jucika and the big catch"
-  - filename: "BloodPressure.jpg"
+  - attachments:
+      - filename: "BloodPressure.jpg"
     title: "Jucika measures blood pressure"
-  - filename: "Boat.jpg"
+  - attachments:
+      - filename: "Boat.jpg"
     title: "Jucika royal (boat ride)"
-  - filename: "BookdayPresent.jpg"
+  - attachments:
+      - filename: "BookdayPresent.jpg"
     title: "Jucika and the Book Day gift"
-  - filename: "Bookshop.jpg"
+  - attachments:
+      - filename: "Bookshop.jpg"
     title: "Jucika browsing"
-  - filename: "Buffet.jpg"
+  - attachments:
+      - filename: "Buffet.jpg"
     title: "Jucika in the bistro"
-  - filename: "BunchBall.jpg"
+  - attachments:
+      - filename: "BunchBall.jpg"
     title: "Jucika's at the bachelor party"
-  - filename: "BurningLove.jpg"
+  - attachments:
+      - filename: "BurningLove.jpg"
     title: "Jucika and the burning love"
-  - filename: "BuyingPresent.jpg"
+  - attachments:
+      - filename: "BuyingPresent.jpg"
     title: "Jucika buys a gift"
-  - filename: "CallAtNight.jpg"
+  - attachments:
+      - filename: "CallAtNight.jpg"
     title: "Jucika night call"
-  - filename: "CallsForTheDoctor.jpg"
+  - attachments:
+      - filename: "CallsForTheDoctor.jpg"
     title: "Jucika calls a doctor"
-  - filename: "Camo.jpg"
+  - attachments:
+      - filename: "Camo.jpg"
     title: "Jucika and the autumn foliage"
-  - filename: "CantSleep.jpg"
+  - attachments:
+      - filename: "CantSleep.jpg"
     title: "Jucika is on vacation (the roommate)"
-  - filename: "CantTakeIt.jpg"
+  - attachments:
+      - filename: "CantTakeIt.jpg"
     title: "Jucika can't win"
-  - filename: "CapriciousWinter.jpg"
+  - attachments:
+      - filename: "CapriciousWinter.jpg"
     title: "Jucika and the whimsical winter"
-  - filename: "Caretaker (2).jpg"
+  - attachments:
+      - filename: "Caretaker (2).jpg"
     title: "Jucika and the virtuous landlord"
-  - filename: "Caretaker.jpg"
+  - attachments:
+      - filename: "Caretaker.jpg"
     title: "Jucika and the housekeeper"
-  - filename: "CarKey.jpg"
+  - attachments:
+      - filename: "CarKey.jpg"
     title: "Jucika and the car key"
-  - filename: "CarMechanic.jpg"
+  - attachments:
+      - filename: "CarMechanic.jpg"
     title: "Jucika and the auto mechanic"
-  - filename: "Carnival2.jpg"
+  - attachments:
+      - filename: "Carnival2.jpg"
     title: "Jucika marches on"
-  - filename: "Carnival3.jpg"
+  - attachments:
+      - filename: "Carnival3.jpg"
     title: "Jucika's silly costume"
-  - filename: "Carnival4.jpg"
+  - attachments:
+      - filename: "Carnival4.jpg"
     title: "Jucika is preparing for a ball"
-  - filename: "Carnival5.jpg"
+  - attachments:
+      - filename: "Carnival5.jpg"
     title: "Jucika's costume party"
-  - filename: "Carnival.jpg"
+  - attachments:
+      - filename: "Carnival.jpg"
     title: "Jucika's carnival"
-  - filename: "CarSaver2.jpg"
+  - attachments:
+      - filename: "CarSaver2.jpg"
     title: "Jucika as an auto rescue"
-  - filename: "CarSaver.jpg"
+  - attachments:
+      - filename: "CarSaver.jpg"
     title: "Jucika as an auto rescue"
-  - filename: "CausesAnAccident.jpg"
+  - attachments:
+      - filename: "CausesAnAccident.jpg"
     title: "Jucika causes an accident"
-  - filename: "ChasteGardener.jpg"
+  - attachments:
+      - filename: "ChasteGardener.jpg"
     title: "Jucika and the embarrassed gardener"
     sensitive: true
-  - filename: "Chichken.jpg"
+  - attachments:
+      - filename: "Chichken.jpg"
     title: "Jucika's hen"
-  - filename: "ChoosingAHat.jpg"
+  - attachments:
+      - filename: "ChoosingAHat.jpg"
     title: "Jucika chooses a hat"
-  - filename: "ChristmanMiracle.jpg"
+  - attachments:
+      - filename: "ChristmanMiracle.jpg"
     title: "A Christmas miracle at Jucika's"
-  - filename: "ChristmasTree.jpg"
+  - attachments:
+      - filename: "ChristmasTree.jpg"
     title: "Jucika and the Christmas tree"
-  - filename: "CinemaCashier.jpg"
+  - attachments:
+      - filename: "CinemaCashier.jpg"
     title: "Jucika is the stylish cinema cashier"
-  - filename: "Cleanliness.jpg"
+  - attachments:
+      - filename: "Cleanliness.jpg"
     title: "Jucika and cleanliness"
-  - filename: "Cleans.jpg"
+  - attachments:
+      - filename: "Cleans.jpg"
     title: "Jucika is cleaning"
-  - filename: "Clerk.jpg"
+  - attachments:
+      - filename: "Clerk.jpg"
     title: "Jucika teaches you to sell"
-  - filename: "Cold2.jpg"
+  - attachments:
+      - filename: "Cold2.jpg"
     title: "Jucika is cold as hell"
-  - filename: "Cold3.jpg"
+  - attachments:
+      - filename: "Cold3.jpg"
     title: "Jucika starts the heating season"
-  - filename: "Cold.jpg"
+  - attachments:
+      - filename: "Cold.jpg"
     title: "Jucika is cold"
-  - filename: "CommonLanguage.jpg"
+  - attachments:
+      - filename: "CommonLanguage.jpg"
     title: "Jucika is the unwilling interpreter"
-  - filename: "CommonWealth.jpg"
+  - attachments:
+      - filename: "CommonWealth.jpg"
     title: "Jucika and the public property"
-  - filename: "CommunityWorkOrganizing.jpg"
+  - attachments:
+      - filename: "CommunityWorkOrganizing.jpg"
     title: "Jucika the social (work) organizer"
-  - filename: "Compensation.jpg"
+  - attachments:
+      - filename: "Compensation.jpg"
     title: "Jucika receives compensation"
-  - filename: "Competition.jpg"
+  - attachments:
+      - filename: "Competition.jpg"
     title: "Jucika and the modern Sámson"
-  - filename: "ComplaintOffice.jpg"
+  - attachments:
+      - filename: "ComplaintOffice.jpg"
     title: "Jucika's touching complaint"
-  - filename: "Conductor2.jpg"
+  - attachments:
+      - filename: "Conductor2.jpg"
     title: "Jucika and the conductor"
-  - filename: "Conductor3.jpg"
+  - attachments:
+      - filename: "Conductor3.jpg"
     title: "Jucika as a conductor"
-  - filename: "Conductor.jpg"
+  - attachments:
+      - filename: "Conductor.jpg"
     title: "Jucika and the conductor"
-  - filename: "Congratulate.jpg"
+  - attachments:
+      - filename: "Congratulate.jpg"
     title: "Jucika congratulates you"
-  - filename: "Connoisseur.jpg"
+  - attachments:
+      - filename: "Connoisseur.jpg"
     title: "Jucika and the connoisseur"
-  - filename: "Contruction.jpg"
+  - attachments:
+      - filename: "Contruction.jpg"
     title: "Jucika and construction"
-  - filename: "CornOnTheCob.jpg"
+  - attachments:
+      - filename: "CornOnTheCob.jpg"
     title: "Jucika and corn on the cob"
-  - filename: "CostumeCompetition.jpg"
+  - attachments:
+      - filename: "CostumeCompetition.jpg"
     title: "Jucika in a costume contest"
-  - filename: "Costume.jpg"
+  - attachments:
+      - filename: "Costume.jpg"
     title: "Jucika in a costume"
-  - filename: "CountryWoman.jpg"
+  - attachments:
+      - filename: "CountryWoman.jpg"
     title: "Jucika as a producer"
-  - filename: "Cover.jpg"
+  - attachments:
+      - filename: "Cover.jpg"
     title: "Jucika doesn't want to get wet"
-  - filename: "CrashHelmet2.jpg"
+  - attachments:
+      - filename: "CrashHelmet2.jpg"
     title: "Jucika rides a motorcycle"
-  - filename: "CrashHelmet.jpg"
+  - attachments:
+      - filename: "CrashHelmet.jpg"
     title: "Jucika and the crash helmet"
-  - filename: "CrimeFiction.jpg"
+  - attachments:
+      - filename: "CrimeFiction.jpg"
     title: "Jucika and the crime novel"
-  - filename: "CrimeMisterz.jpg"
+  - attachments:
+      - filename: "CrimeMisterz.jpg"
     title: "Jucika and the criminal mystery"
-  - filename: "CuttingIn.jpg"
+  - attachments:
+      - filename: "CuttingIn.jpg"
     title: "Jucika takes care of cutters"
-  - filename: "Dance2.jpg"
+  - attachments:
+      - filename: "Dance2.jpg"
     title: "Jucika on holiday (getting to know each other)"
-  - filename: "Dance.jpg"
+  - attachments:
+      - filename: "Dance.jpg"
   # Can't figure out a good translation for this
-  - filename: "DANGER.jpg"
+  - attachments:
+      - filename: "DANGER.jpg"
     title: "Jucika in the shop window"
-  - filename: "DefectiveProduct.jpg"
+  - attachments:
+      - filename: "DefectiveProduct.jpg"
     title: "Jucika and the scraps"
   # Can't figure out a good translation for this
-  - filename: "DeliveryRoom.jpg"
-  - filename: "Detention.jpg"
+  - attachments:
+      - filename: "DeliveryRoom.jpg"
+  - attachments:
+      - filename: "Detention.jpg"
     title: "Jucika and urgent work"
-  - filename: "Discreation.jpg"
+  - attachments:
+      - filename: "Discreation.jpg"
     title: "Jucika and discretion"
-  - filename: "Dispenser.jpg"
+  - attachments:
+      - filename: "Dispenser.jpg"
     title: "Jucika and the automaton"
-  - filename: "Diver.jpg"
+  - attachments:
+      - filename: "Diver.jpg"
     title: "Jucika at the high jump competition"
-  - filename: "DIYBeach.jpg"
+  - attachments:
+      - filename: "DIYBeach.jpg"
     title: "Jucika's Sunday supplement"
-  - filename: "DogDays2.jpg"
+  - attachments:
+      - filename: "DogDays2.jpg"
     title: "Jucika and the heat wave"
   # Can't figure out a good translation for this
-  - filename: "DogDays.jpg"
-  - filename: "DogFriendship.jpg"
+  - attachments:
+      - filename: "DogDays.jpg"
+  - attachments:
+      - filename: "DogFriendship.jpg"
     title: "Jucika and dog friendship"
-  - filename: "DogOwner.jpg"
+  - attachments:
+      - filename: "DogOwner.jpg"
     title: "Jucika and the dog owner"
-  - filename: "Donut.jpg"
+  - attachments:
+      - filename: "Donut.jpg"
     title: "Jucika bakes donuts"
-  - filename: "Dreams.jpg"
+  - attachments:
+      - filename: "Dreams.jpg"
     title: "Jucika dreams"
     sensitive: true
-  - filename: "Driving.jpg"
+  - attachments:
+      - filename: "Driving.jpg"
     title: "Jucika is driving"
-  - filename: "DrunkHusband.jpg"
+  - attachments:
+      - filename: "DrunkHusband.jpg"
     title: "Jucika takes her husband home"
-  - filename: "Drunk.jpg"
+  - attachments:
+      - filename: "Drunk.jpg"
     title: "Jucika and the drunk"
-  - filename: "DyedJucika.jpg"
+  - attachments:
+      - filename: "DyedJucika.jpg"
     title: "Jucika and the trapper husband"
-  - filename: "EarlyForBeach.jpg"
+  - attachments:
+      - filename: "EarlyForBeach.jpg"
     title: "Jucika starts the season"
-  - filename: "EarlyRendezvous.jpg"
+  - attachments:
+      - filename: "EarlyRendezvous.jpg"
     title: "Jucika early rendezvous"
-  - filename: "EasterPipeRupture.jpg"
+  - attachments:
+      - filename: "EasterPipeRupture.jpg"
     title: "Jucika and the Easter pipe burst"
-  - filename: "EasterSprinkle2.jpg"
+  - attachments:
+      - filename: "EasterSprinkle2.jpg"
     title: "Jucika Easter"
     sensitive: true
-  - filename: "EasterSprinkle.jpg"
+  - attachments:
+      - filename: "EasterSprinkle.jpg"
     title: "Jucika and the Easter sprinkling"
-  - filename: "Educate.jpg"
+  - attachments:
+      - filename: "Educate.jpg"
     title: "Jucika educates"
-  - filename: "EndOfMonth.jpg"
+  - attachments:
+      - filename: "EndOfMonth.jpg"
     title: "Jucika is in financial trouble at the end of the month"
-  - filename: "ExcitingBook2.jpg"
+  - attachments:
+      - filename: "ExcitingBook2.jpg"
     title: "Jucika exciting book"
-  - filename: "ExcitingBook.jpg"
+  - attachments:
+      - filename: "ExcitingBook.jpg"
     title: "Jucika's exciting book"
-  - filename: "Exhibition.jpg"
+  - attachments:
+      - filename: "Exhibition.jpg"
     title: "Jucika at the exhibition"
-  - filename: "Extra.jpg"
+  - attachments:
+      - filename: "Extra.jpg"
     title: "Jucika actress"
-  - filename: "FamilyDinner.jpg"
+  - attachments:
+      - filename: "FamilyDinner.jpg"
     title: "Jucika and the family dinner"
-  - filename: "Fashion2.jpg"
+  - attachments:
+      - filename: "Fashion2.jpg"
     title: "Jucika moves with fashion"
-  - filename: "Fashion (2).jpg"
+  - attachments:
+      - filename: "Fashion (2).jpg"
     title: "Jucika and the diva"
-  - filename: "Fashion3.jpg"
+  - attachments:
+      - filename: "Fashion3.jpg"
     title: "Jucika makes her clothes fashionable"
-  - filename: "Fashion.jpg"
+  - attachments:
+      - filename: "Fashion.jpg"
     title: "Jucika and the fashion fad"
-  - filename: "FashionShow2.jpg"
+  - attachments:
+      - filename: "FashionShow2.jpg"
     title: "Jucika fashion show"
-  - filename: "FashionSHow.jpg"
+  - attachments:
+      - filename: "FashionSHow.jpg"
     title: "Jucika going to a fashion show"
-  - filename: "Fat.jpg"
+  - attachments:
+      - filename: "Fat.jpg"
     title: "Jucika's confidence"
     sensitive: true
-  - filename: "FieldWork.jpg"
+  - attachments:
+      - filename: "FieldWork.jpg"
     title: "Jucika helps with threshing"
-  - filename: "FinallySomeHeating.jpg"
+  - attachments:
+      - filename: "FinallySomeHeating.jpg"
     title: "Jucika's finally warming up!"
-  - filename: "FirstAid2.jpg"
+  - attachments:
+      - filename: "FirstAid2.jpg"
     title: "Jucika and the first aid"
-  - filename: "FirstAid.jpg"
+  - attachments:
+      - filename: "FirstAid.jpg"
     title: "Jucika provides first aid"
-  - filename: "FirstIgnite.jpg"
+  - attachments:
+      - filename: "FirstIgnite.jpg"
     title: "Jucika and the first ignition"
-  - filename: "FirstTimeLaunching.jpg"
+  - attachments:
+      - filename: "FirstTimeLaunching.jpg"
     title: "Jucika and the ship launching"
-  - filename: "FistSunbath.jpg"
+  - attachments:
+      - filename: "FistSunbath.jpg"
     title: "Jucika and the first sunbathing"
-  - filename: "FlatUnderConstruction.jpg"
+  - attachments:
+      - filename: "FlatUnderConstruction.jpg"
     title: "Jucika in the under-construction apartment"
-  - filename: "FlightAttendant2.jpg"
+  - attachments:
+      - filename: "FlightAttendant2.jpg"
     title: "Jucika, the stylish flight attendant"
     sensitive: true
-  - filename: "FlightAttendant.jpg"
+  - attachments:
+      - filename: "FlightAttendant.jpg"
     title: "Jucika as a flight attendant"
-  - filename: "Flirt.jpg"
+  - attachments:
+      - filename: "Flirt.jpg"
     title: "Jucika and the asphalt outlaw"
-  - filename: "Flower.jpg"
+  - attachments:
+      - filename: "Flower.jpg"
     title: "Jucika and the flower"
-  - filename: "Fog.jpg"
+  - attachments:
+      - filename: "Fog.jpg"
     title: "Jucika in the fog"
-  - filename: "Foreign.jpg"
+  - attachments:
+      - filename: "Foreign.jpg"
     title: "Jucika and the foreigner"
-  - filename: "ForeignRelative.jpg"
+  - attachments:
+      - filename: "ForeignRelative.jpg"
     title: "Jucika and the foreign visitor"
-  - filename: "ForeignStore.jpg"
+  - attachments:
+      - filename: "ForeignStore.jpg"
     title: "Jucika in a foreign store"
-  - filename: "FreshFirewood.jpg"
+  - attachments:
+      - filename: "FreshFirewood.jpg"
     title: "Jucika and fresh firewood"
-  - filename: "Frogman.jpg"
+  - attachments:
+      - filename: "Frogman.jpg"
     title: "Jucika and the frogman"
-  - filename: "Gambling.jpg"
+  - attachments:
+      - filename: "Gambling.jpg"
     title: "Jucika and gambling"
-  - filename: "Gardening.jpg"
+  - attachments:
+      - filename: "Gardening.jpg"
     title: "Jucika is gardening"
-  - filename: "Gentlemen3.jpg"
+  - attachments:
+      - filename: "Gentlemen3.jpg"
     title: "Jucika and the gentlemen"
-  - filename: "Gentlemens2.jpg"
+  - attachments:
+      - filename: "Gentlemens2.jpg"
     title: "Jucika and the polite gentlemen"
-  - filename: "Gentlemens.jpg"
+  - attachments:
+      - filename: "Gentlemens.jpg"
     title: "Jucika and the gentlemen"
-  - filename: "GentleWarning.jpg"
+  - attachments:
+      - filename: "GentleWarning.jpg"
     title: "Jucika's gentle warning"
-  - filename: "GetsATable.jpg"
+  - attachments:
+      - filename: "GetsATable.jpg"
     title: "Jucika gets a table"
-  - filename: "GetsSomePresents.jpg"
+  - attachments:
+      - filename: "GetsSomePresents.jpg"
     title: "Jucika gets some gifts"
-  - filename: "GettingAway.jpg"
+  - attachments:
+      - filename: "GettingAway.jpg"
     title: "Jucika gets away"
-  - filename: "GettingTheDrivingLicense.jpg"
+  - attachments:
+      - filename: "GettingTheDrivingLicense.jpg"
     title: "Jucika is preparing for the driving exam"
-  - filename: "Girlfriend.jpg"
+  - attachments:
+      - filename: "Girlfriend.jpg"
     title: "Jucika's talkative girlfriend"
-  - filename: "GivesPresent.jpg"
+  - attachments:
+      - filename: "GivesPresent.jpg"
     title: "Jucika's present"
-  - filename: "GlassDoor.jpg"
+  - attachments:
+      - filename: "GlassDoor.jpg"
     title: "Jucika and the glass door"
-  - filename: "GoalShot.jpg"
+  - attachments:
+      - filename: "GoalShot.jpg"
     title: "Jucika wants to shoot a goal"
-  - filename: "GroupDance.jpg"
+  - attachments:
+      - filename: "GroupDance.jpg"
     title: "Jucika in a dance group"
-  - filename: "Growth.jpg"
+  - attachments:
+      - filename: "Growth.jpg"
     title: "Jucika and the prolific houseplant"
-  - filename: "GuardianAngel.jpg"
+  - attachments:
+      - filename: "GuardianAngel.jpg"
     title: "Jucika as a guardian angel"
-  - filename: "Guide.jpg"
+  - attachments:
+      - filename: "Guide.jpg"
     title: "Jucika as a tour guide"
-  - filename: "Gymnastics.jpg"
+  - attachments:
+      - filename: "Gymnastics.jpg"
     title: "Jucika the competition winner"
-  - filename: "HandheldRadio.jpg"
+  - attachments:
+      - filename: "HandheldRadio.jpg"
     title: "Jucika's bag radio"
-  - filename: "Harvest.jpg"
+  - attachments:
+      - filename: "Harvest.jpg"
     title: "Jucika at harvest time"
-  - filename: "HelpsOut2.jpg"
+  - attachments:
+      - filename: "HelpsOut2.jpg"
     title: "Jucika helps out"
-  - filename: "HelpsOut.jpg"
+  - attachments:
+      - filename: "HelpsOut.jpg"
     title: "Jucika as a traffic officer"
-  - filename: "HiddenPresent.jpg"
+  - attachments:
+      - filename: "HiddenPresent.jpg"
     title: "Jucika and the hidden gift"
-  - filename: "HighPitch.jpg"
+  - attachments:
+      - filename: "HighPitch.jpg"
     title: "Jucika and the high pitch"
-  - filename: "HighTrafficInterview.jpg"
+  - attachments:
+      - filename: "HighTrafficInterview.jpg"
     title: "Jucika and the rush hour interview"
-  - filename: "HighTraffic.jpg"
+  - attachments:
+      - filename: "HighTraffic.jpg"
     title: "Jucika in rush hour traffic"
-  - filename: "Hitchhike.jpg"
+  - attachments:
+      - filename: "Hitchhike.jpg"
     title: "Jucika and the driver"
-  - filename: "Holiday.jpg"
+  - attachments:
+      - filename: "Holiday.jpg"
     title: "Jucika is celebrating"
-  - filename: "HolidayTravel.jpg"
+  - attachments:
+      - filename: "HolidayTravel.jpg"
     title: "Jucika's holiday trip"
-  - filename: "HomeConcert.jpg"
+  - attachments:
+      - filename: "HomeConcert.jpg"
     title: "Jucika' home concert"
-  - filename: "Horserace.jpg"
+  - attachments:
+      - filename: "Horserace.jpg"
     title: "Jucika's favorite"
-  - filename: "Hunter2.jpg"
+  - attachments:
+      - filename: "Hunter2.jpg"
     title: "Jucika hunting prey"
-  - filename: "Hunter.jpg"
+  - attachments:
+      - filename: "Hunter.jpg"
     title: "Jucika is animal-friendly"
-  - filename: "HusbandToTheRescue.jpg"
+  - attachments:
+      - filename: "HusbandToTheRescue.jpg"
     title: "Jucika and the helpful husband"
-  - filename: "Illusionist.jpg"
+  - attachments:
+      - filename: "Illusionist.jpg"
     title: "Jucika and \"Who Knows What?\""
-  - filename: "ImpatientGuests.jpg"
+  - attachments:
+      - filename: "ImpatientGuests.jpg"
     title: "Jucika and the impatient guests"
-  - filename: "InAHurry.jpg"
+  - attachments:
+      - filename: "InAHurry.jpg"
     title: "Jucika hurry"
-  - filename: "Interview.jpg"
+  - attachments:
+      - filename: "Interview.jpg"
     title: "Jucika and the reporter"
     sensitive: true
-  - filename: "Jealous.jpg"
+  - attachments:
+      - filename: "Jealous.jpg"
     title: "Jucika is jealous"
-  - filename: "Jealousy.jpg"
+  - attachments:
+      - filename: "Jealousy.jpg"
     title: "Jucika and unreasonable jealousy"
-  - filename: "Joke.jpg"
+  - attachments:
+      - filename: "Joke.jpg"
     title: "Jucika and the nerve-racking joke"
-  - filename: "JustConductor.jpg"
+  - attachments:
+      - filename: "JustConductor.jpg"
     title: "Jucika and the righteous conductor"
-  - filename: "Kayak.jpg"
+  - attachments:
+      - filename: "Kayak.jpg"
     title: "Jucika on a test drive"
     sensitive: true
-  - filename: "KnittedCloth.jpg"
+  - attachments:
+      - filename: "KnittedCloth.jpg"
     title: "Jucika's knitted dress"
-  - filename: "LastGuest.jpg"
+  - attachments:
+      - filename: "LastGuest.jpg"
     title: "Jucika and the last guest"
-  - filename: "Late.jpg"
+  - attachments:
+      - filename: "Late.jpg"
     title: "Jucika is late"
-  - filename: "Launch.jpg"
+  - attachments:
+      - filename: "Launch.jpg"
     title: "Jucika tosses"
-  - filename: "Leak.jpg"
+  - attachments:
+      - filename: "Leak.jpg"
     title: "Jucika gets wet"
-  - filename: "Lifebelt.jpg"
+  - attachments:
+      - filename: "Lifebelt.jpg"
     title: "Jucika's life belt"
-  - filename: "Lifeguard.jpg"
+  - attachments:
+      - filename: "Lifeguard.jpg"
     title: "Jucika and the lifeguards"
-  - filename: "LifeSaver (2).jpg"
+  - attachments:
+      - filename: "LifeSaver (2).jpg"
     title: "Jucika and the lifesaver"
     sensitive: true
-  - filename: "LifeSaver.jpg"
+  - attachments:
+      - filename: "LifeSaver.jpg"
     title: "Jucika saves a life"
-  - filename: "LikesTheBeer.jpg"
+  - attachments:
+      - filename: "LikesTheBeer.jpg"
     title: "Jucika likes beer"
-  - filename: "LikesToBeAlone.jpg"
+  - attachments:
+      - filename: "LikesToBeAlone.jpg"
     title: "Jucika likes solitude"
-  - filename: "LooksForProtection.jpg"
+  - attachments:
+      - filename: "LooksForProtection.jpg"
     title: "Jucika finds protection"
-  - filename: "LooksForWork.jpg"
+  - attachments:
+      - filename: "LooksForWork.jpg"
     title: "Jucika is looking for a job"
-  - filename: "LostKey.jpg"
+  - attachments:
+      - filename: "LostKey.jpg"
     title: "Jucika is looking for the key"
-  - filename: "Loudspeaker2.jpg"
+  - attachments:
+      - filename: "Loudspeaker2.jpg"
     title: "Jucika shouts back"
-  - filename: "Loudspeaker.jpg"
+  - attachments:
+      - filename: "Loudspeaker.jpg"
     title: "Jucika and speaker fashion"
-  - filename: "LovesAutumn.jpg"
+  - attachments:
+      - filename: "LovesAutumn.jpg"
     title: "Jucika likes autumn"
-  - filename: "MagicCleaner.jpg"
+  - attachments:
+      - filename: "MagicCleaner.jpg"
     title: "Jucika and the miracle cleaner"
-  - filename: "Maid.jpg"
+  - attachments:
+      - filename: "Maid.jpg"
     title: "Jucika, her husband and the housekeeper"
-  - filename: "MaidWanted.jpg"
+  - attachments:
+      - filename: "MaidWanted.jpg"
     title: "Jucika and the cleaning service"
-  - filename: "MakingReport.jpg"
+  - attachments:
+      - filename: "MakingReport.jpg"
     title: "Jucika the record-keeper"
-  - filename: "MasterTactician.jpg"
+  - attachments:
+      - filename: "MasterTactician.jpg"
     title: "Jucika's tactical move"
-  - filename: "Match.jpg"
+  - attachments:
+      - filename: "Match.jpg"
     title: "Jucika in the match"
-  - filename: "MayTree.jpg"
+  - attachments:
+      - filename: "MayTree.jpg"
     title: "Jucika at the posy ceremony"
-  - filename: "MechanizedCleaning.jpg"
+  - attachments:
+      - filename: "MechanizedCleaning.jpg"
     title: "Jucika mechanizes the cleaning"
-  - filename: "Meeting.jpg"
+  - attachments:
+      - filename: "Meeting.jpg"
     title: "Jucika negotiates"
-  - filename: "MeetingWithGagarin.jpg"
+  - attachments:
+      - filename: "MeetingWithGagarin.jpg"
     title: "Jucika's meeting with Gagarin"
-  - filename: "Melon.jpg"
+  - attachments:
+      - filename: "Melon.jpg"
     title: "Jucika and the melon market"
-  - filename: "Memorial.jpg"
+  - attachments:
+      - filename: "Memorial.jpg"
     title: "Jucika and the memorial line"
-  - filename: "ModernDirector.jpg"
+  - attachments:
+      - filename: "ModernDirector.jpg"
     title: "Jucika and the modern director"
-  - filename: "MorningExcercise.jpg"
+  - attachments:
+      - filename: "MorningExcercise.jpg"
     title: "Jucika on holiday (morning exercise)"
-  - filename: "MorningHurryScurry.jpg"
+  - attachments:
+      - filename: "MorningHurryScurry.jpg"
     title: "Jucika in the morning"
-  - filename: "Mosquito.jpg"
+  - attachments:
+      - filename: "Mosquito.jpg"
     title: "Jucika and the mosquitoes"
-  - filename: "MovieStar.jpg"
+  - attachments:
+      - filename: "MovieStar.jpg"
     title: "Jucika and the movie star"
-  - filename: "Mud.jpg"
+  - attachments:
+      - filename: "Mud.jpg"
     title: "Jucika and the mud"
-  - filename: "Nervy.jpg"
+  - attachments:
+      - filename: "Nervy.jpg"
     title: "Jucika is nervous"
-  - filename: "Net.jpg"
+  - attachments:
+      - filename: "Net.jpg"
     title: "Jucika's net"
-  - filename: "NetSuit.jpg"
+  - attachments:
+      - filename: "NetSuit.jpg"
     title: "Jucika's mesh swimsuit"
     sensitive: true
-  - filename: "NewBook.jpg"
+  - attachments:
+      - filename: "NewBook.jpg"
     title: "Jucika and the new book"
-  - filename: "NewPattern.jpg"
+  - attachments:
+      - filename: "NewPattern.jpg"
     title: "Jucika designs a textile pattern"
-  - filename: "NightSchool.jpg"
+  - attachments:
+      - filename: "NightSchool.jpg"
     title: "Jucika's night school"
-  - filename: "NightShow.jpg"
+  - attachments:
+      - filename: "NightShow.jpg"
     title: "Jucika and the hight broadcast"
-  - filename: "NoFreeTaxi.jpg"
+  - attachments:
+      - filename: "NoFreeTaxi.jpg"
     title: "Jucika doesn't get a taxi"
-  - filename: "NoisyRadio.jpg"
+  - attachments:
+      - filename: "NoisyRadio.jpg"
     title: "Jucika wants to sleep"
-  - filename: "Nudist.jpg"
+  - attachments:
+      - filename: "Nudist.jpg"
     title: "Jucika at the nude lake"
     sensitive: true
-  - filename: "Obeys.jpg"
+  - attachments:
+      - filename: "Obeys.jpg"
     title: "Jucika obeys"
-  - filename: "ObligatoryCloakroom.jpg"
+  - attachments:
+      - filename: "ObligatoryCloakroom.jpg"
     title: "Jucika is upper class"
     sensitive: true
-  - filename: "Office.jpg"
+  - attachments:
+      - filename: "Office.jpg"
     title: "Jucika is exceptional"
-  - filename: "OneJucikaDoesNotMakeASummer.jpg"
+  - attachments:
+      - filename: "OneJucikaDoesNotMakeASummer.jpg"
     title: "Jucika does not bring spring"
-  - filename: "OnTheBus.jpg"
+  - attachments:
+      - filename: "OnTheBus.jpg"
     title: "Jucika on the bus"
-  - filename: "OpenairStage2.jpg"
+  - attachments:
+      - filename: "OpenairStage2.jpg"
     title: "Jucika in an outdoor theater"
-  - filename: "OpenairStage.jpg"
+  - attachments:
+      - filename: "OpenairStage.jpg"
     title: "Jucika at an outdoor performance"
-  - filename: "OutOfOrderDueToSpring.jpg"
+  - attachments:
+      - filename: "OutOfOrderDueToSpring.jpg"
     title: "Jucika understands"
-  - filename: "Overtime.jpg"
+  - attachments:
+      - filename: "Overtime.jpg"
     title: "Jucika oversteps"
-  - filename: "Pacify.jpg"
+  - attachments:
+      - filename: "Pacify.jpg"
     title: "Jucika makes peace"
-  - filename: "Package.jpg"
+  - attachments:
+      - filename: "Package.jpg"
     title: "Jucika gets him to carry luggage"
-  - filename: "Paint.jpg"
+  - attachments:
+      - filename: "Paint.jpg"
     title: "Jucika encourages you to work"
-  - filename: "Paperwork.jpg"
+  - attachments:
+      - filename: "Paperwork.jpg"
     title: "Jucika handes a case"
-  - filename: "Parachute.jpg"
+  - attachments:
+      - filename: "Parachute.jpg"
     title: "Jucika and parachute training"
-  - filename: "Parade.jpg"
+  - attachments:
+      - filename: "Parade.jpg"
     title: "Jucika and the decorative parade"
-  - filename: "Parrot.jpg"
+  - attachments:
+      - filename: "Parrot.jpg"
     title: "Jucika and the parrot"
-  - filename: "Peach.jpg"
+  - attachments:
+      - filename: "Peach.jpg"
     title: "Jucika and the peach"
     sensitive: true
-  - filename: "PedestrianCrossing.jpg"
+  - attachments:
+      - filename: "PedestrianCrossing.jpg"
     title: "Jucika and the \"zebra\""
-  - filename: "PerfectHost.jpg"
+  - attachments:
+      - filename: "PerfectHost.jpg"
     title: "Jucika the excellent host"
-  - filename: "PersonalBusStop.jpg"
+  - attachments:
+      - filename: "PersonalBusStop.jpg"
     title: "Jucika's own bus stop"
-  - filename: "PhoneBooth2.jpg"
+  - attachments:
+      - filename: "PhoneBooth2.jpg"
     title: "Jucika phones"
-  - filename: "PhoneBooth.jpg"
+  - attachments:
+      - filename: "PhoneBooth.jpg"
     title: "Jucika phones"
-  - filename: "Phone.jpg"
+  - attachments:
+      - filename: "Phone.jpg"
     title: "Jucika and the telphone"
-  - filename: "Picky.jpg"
+  - attachments:
+      - filename: "Picky.jpg"
     title: "Jucika picks"
-  - filename: "Plaket.jpg"
+  - attachments:
+      - filename: "Plaket.jpg"
     title: "Jucika as a posterwoman"
-  - filename: "PlayfulPuppy.jpg"
+  - attachments:
+      - filename: "PlayfulPuppy.jpg"
     title: "Jucika and the fetch"
-  - filename: "PlsNoSmoke.jpg"
+  - attachments:
+      - filename: "PlsNoSmoke.jpg"
     title: "Jucika is against smoking"
-  - filename: "Polishing.jpg"
+  - attachments:
+      - filename: "Polishing.jpg"
     title: "Jucika and parquet polishing"
-  - filename: "PoliteDriver2.jpg"
+  - attachments:
+      - filename: "PoliteDriver2.jpg"
     title: "Jucika and the friendly bus driver"
-  - filename: "PoliteDriver.jpg"
+  - attachments:
+      - filename: "PoliteDriver.jpg"
     title: "Jucika and the polite driver"
-  - filename: "Polite.jpg"
+  - attachments:
+      - filename: "Polite.jpg"
     title: "Jucika is polite"
-  - filename: "PoliteNeighbor.jpg"
+  - attachments:
+      - filename: "PoliteNeighbor.jpg"
     title: "Jucika and the polite neighbor"
-  - filename: "PolitePatient.jpg"
+  - attachments:
+      - filename: "PolitePatient.jpg"
     title: "Jucika and the polite patient"
-  - filename: "PreparingForWinter.jpg"
+  - attachments:
+      - filename: "PreparingForWinter.jpg"
     title: "Jucika is thinking about winter"
-  - filename: "Present.jpg"
+  - attachments:
+      - filename: "Present.jpg"
     title: "Jucika and the gifts"
-  - filename: "PreventingTrafficAccident.jpg"
+  - attachments:
+      - filename: "PreventingTrafficAccident.jpg"
     title: "Jucika the public service announcer"
     note: "Sign says \"ACCIDENT-PREVENTION MONTH\""
-  - filename: "PrivatePhone.jpg"
+  - attachments:
+      - filename: "PrivatePhone.jpg"
     title: "Jucika's discreet phone"
-  - filename: "PrivateProperty.jpg"
+  - attachments:
+      - filename: "PrivateProperty.jpg"
     title: "Jucika as a model"
     note: "Sign says \"PRIVATE AREA\""
-  - filename: "PrivateTeacher.jpg"
+  - attachments:
+      - filename: "PrivateTeacher.jpg"
     title: "Jucika as a home teacher"
-  - filename: "Protection.jpg"
+  - attachments:
+      - filename: "Protection.jpg"
     title: "Jucika is looking for shelter"
-  - filename: "PunishingTheBureaucrat.jpg"
+  - attachments:
+      - filename: "PunishingTheBureaucrat.jpg"
     title: "Jucika punishes the bureaucrat"
-  - filename: "Pupper.jpg"
+  - attachments:
+      - filename: "Pupper.jpg"
     title: "Jucika in anger"
-  - filename: "PureIntentions.jpg"
+  - attachments:
+      - filename: "PureIntentions.jpg"
     title: "Jucika's ulterior motive"
-  - filename: "QualityInspector.jpg"
+  - attachments:
+      - filename: "QualityInspector.jpg"
     title: "Jucika as a quality inspector"
-  - filename: "ReadingRoom.jpg"
+  - attachments:
+      - filename: "ReadingRoom.jpg"
     title: "Jucika in the reading room"
-  - filename: "Rearview.jpg"
+  - attachments:
+      - filename: "Rearview.jpg"
     title: "Jucika and the rearview mirror"
-  - filename: "RecordSpeed.jpg"
+  - attachments:
+      - filename: "RecordSpeed.jpg"
     title: "Jucika runs a stadium sprint"
-  - filename: "Renovate.jpg"
+  - attachments:
+      - filename: "Renovate.jpg"
     title: "Jucika renovates"
-  - filename: "ReplacementWorker2.jpg"
+  - attachments:
+      - filename: "ReplacementWorker2.jpg"
     title: "Jucika the substitute worker"
-  - filename: "ReplacementWorker.jpg"
+  - attachments:
+      - filename: "ReplacementWorker.jpg"
     title: "Jucika the substitute"
-  - filename: "ReturnFromVacation2.jpg"
+  - attachments:
+      - filename: "ReturnFromVacation2.jpg"
     title: "Jucika arrives from vacation"
     sensitive: true
-  - filename: "ReturnFromVacation.jpg"
+  - attachments:
+      - filename: "ReturnFromVacation.jpg"
     title: "Jucika has returned from her holiday"
-  - filename: "Revenge.jpg"
+  - attachments:
+      - filename: "Revenge.jpg"
     title: "Jucika's revenge"
-  - filename: "Robotman2.jpg"
+  - attachments:
+      - filename: "Robotman2.jpg"
     title: "Jucika and the robot man"
-  - filename: "Robotman.jpg"
+  - attachments:
+      - filename: "Robotman.jpg"
     title: "Jucika and the robot man"
-  - filename: "RoleSwap.jpg"
+  - attachments:
+      - filename: "RoleSwap.jpg"
     title: "Jucika and the doctor"
-  - filename: "Rome.jpg"
+  - attachments:
+      - filename: "Rome.jpg"
     title: "Jucika wants to go to Rome"
-  - filename: "Rose.jpg"
+  - attachments:
+      - filename: "Rose.jpg"
     title: "Jucika and the rose"
-  - filename: "Roundabout.jpg"
-  - filename: "Rug.jpg"
+  - attachments:
+      - filename: "Roundabout.jpg"
+  - attachments:
+      - filename: "Rug.jpg"
     title: "Jucika is cleaning"
-  - filename: "RunOver.jpg"
+  - attachments:
+      - filename: "RunOver.jpg"
     title: "Jucika's accident"
-  - filename: "Safety.jpg"
+  - attachments:
+      - filename: "Safety.jpg"
     title: "Jucika provides safety"
-  - filename: "SameCloth.jpg"
+  - attachments:
+      - filename: "SameCloth.jpg"
     title: "Jucika and the same outfit"
-  - filename: "Sandals.jpg"
+  - attachments:
+      - filename: "Sandals.jpg"
     title: "Jucika in sandals"
-  - filename: "Santa.jpg"
+  - attachments:
+      - filename: "Santa.jpg"
     title: "Jucika and Santa Claus"
-  - filename: "Scale.jpg"
+  - attachments:
+      - filename: "Scale.jpg"
     title: "Jucika and the scale"
-  - filename: "ScaredyStudent.jpg"
+  - attachments:
+      - filename: "ScaredyStudent.jpg"
     title: "Jucika and the timid student"
-  - filename: "SecondShift2.jpg"
+  - attachments:
+      - filename: "SecondShift2.jpg"
     title: "Jucika's second job"
-  - filename: "SecondShift.jpg"
+  - attachments:
+      - filename: "SecondShift.jpg"
     title: "Jucika's second shift"
-  - filename: "SelfServeShop.jpg"
+  - attachments:
+      - filename: "SelfServeShop.jpg"
     title: "Jucika in a self-service store"
-  - filename: "SheetMusicScroller.jpg"
+  - attachments:
+      - filename: "SheetMusicScroller.jpg"
     title: "Jucika as a sheet music score"
-  - filename: "Shopping2.jpg"
+  - attachments:
+      - filename: "Shopping2.jpg"
     title: "Jucika shopping"
-  - filename: "Shopping3.jpg"
+  - attachments:
+      - filename: "Shopping3.jpg"
     title: "Jucika and her husband at Vását"
-  - filename: "Shopping.jpg"
+  - attachments:
+      - filename: "Shopping.jpg"
     title: "Jucika shops"
     sensitive: true
-  - filename: "ShopWindow.jpg"
+  - attachments:
+      - filename: "ShopWindow.jpg"
     title: "Jucika organizes a shop window"
-  - filename: "ShowWindow.jpg"
+  - attachments:
+      - filename: "ShowWindow.jpg"
     title: "Jucika and the modern storefront"
-  - filename: "SightseeingBus.jpg"
+  - attachments:
+      - filename: "SightseeingBus.jpg"
     title: "Jucika and the sightseeing bus"
-  - filename: "Sign.jpg"
+  - attachments:
+      - filename: "Sign.jpg"
     title: "Jucika's signature"
-  - filename: "Skating.jpg"
+  - attachments:
+      - filename: "Skating.jpg"
     title: "Jucika learns to skate"
-  - filename: "Ski.jpg"
+  - attachments:
+      - filename: "Ski.jpg"
     title: "Jucika as a skier"
     sensitive: true
-  - filename: "Skirt.jpg"
+  - attachments:
+      - filename: "Skirt.jpg"
     title: "Jucika in a fahsionable skirt"
-  - filename: "SleepingPill.jpg"
+  - attachments:
+      - filename: "SleepingPill.jpg"
     title: "Jucika in a new house"
-  - filename: "Slippery.jpg"
+  - attachments:
+      - filename: "Slippery.jpg"
     title: "Jucika and the slippery road"
-  - filename: "SlipperyRoad.jpg"
+  - attachments:
+      - filename: "SlipperyRoad.jpg"
     title: "Jucika on the slippery road"
-  - filename: "SouvenirExchange.jpg"
+  - attachments:
+      - filename: "SouvenirExchange.jpg"
     title: "Jucika exchanges souvenirs"
-  - filename: "SpaceRendezvous.jpg"
+  - attachments:
+      - filename: "SpaceRendezvous.jpg"
     title: "Jucika space date"
-  - filename: "SportChad.jpg"
+  - attachments:
+      - filename: "SportChad.jpg"
     title: "Jucika ideal sport"
-  - filename: "Sport.jpg"
+  - attachments:
+      - filename: "Sport.jpg"
     title: "Jucika retires from sports"
-  - filename: "Spring.jpg"
+  - attachments:
+      - filename: "Spring.jpg"
     title: "Jucika and spring"
-  - filename: "SpringMagic.jpg"
+  - attachments:
+      - filename: "SpringMagic.jpg"
     title: "Jucika conjures up spring"
-  - filename: "StartingKick.jpg"
+  - attachments:
+      - filename: "StartingKick.jpg"
     title: "Jucika's kick-off"
-  - filename: "StickyExample.jpg"
+  - attachments:
+      - filename: "StickyExample.jpg"
     title: "Jucika and the bad example"
-  - filename: "StockTaking.jpg"
+  - attachments:
+      - filename: "StockTaking.jpg"
     title: "Jucika does inventory"
-  - filename: "Storm2.jpg"
+  - attachments:
+      - filename: "Storm2.jpg"
     title: "Jucika and the thunderstorm"
-  - filename: "Storm.jpg"
+  - attachments:
+      - filename: "Storm.jpg"
     title: "Jucika in a thunderstorm"
-  - filename: "StrawberryCleaning.jpg"
+  - attachments:
+      - filename: "StrawberryCleaning.jpg"
     title: "Jucika is washing strawberries"
-  - filename: "StripteaseBar.jpg"
+  - attachments:
+      - filename: "StripteaseBar.jpg"
     title: "Jucika in a strip bar"
-  - filename: "StuckUp.jpg"
+  - attachments:
+      - filename: "StuckUp.jpg"
     title: "Jucika and her handsome colleague"
-  - filename: "Subway.jpg"
+  - attachments:
+      - filename: "Subway.jpg"
     title: "Jucika and her underground adventure"
-  - filename: "SummerCloth.jpg"
+  - attachments:
+      - filename: "SummerCloth.jpg"
     title: "Jucika is changing"
-  - filename: "SummerNight.jpg"
+  - attachments:
+      - filename: "SummerNight.jpg"
     title: "Jucika and the summer night"
     sensitive: true
-  - filename: "SummerVacation.jpg"
+  - attachments:
+      - filename: "SummerVacation.jpg"
     title: "Jucika and the vacationing children"
-  - filename: "Sunbath2.jpg"
+  - attachments:
+      - filename: "Sunbath2.jpg"
     title: "Jucika sunbathes"
     sensitive: true
-  - filename: "Sunbath3.jpg"
+  - attachments:
+      - filename: "Sunbath3.jpg"
     title: "Jucika is sunbathing"
-  - filename: "Sunbath.jpg"
+  - attachments:
+      - filename: "Sunbath.jpg"
     title: "Jucika sunbathes"
     sensitive: true
-  - filename: "SuperMini.jpg"
+  - attachments:
+      - filename: "SuperMini.jpg"
     title: "Jucika in a super miniskirt"
     sensitive: true
-  - filename: "SurrogateMother.jpg"
+  - attachments:
+      - filename: "SurrogateMother.jpg"
     title: "Jucika the mother"
-  - filename: "Suspicion.jpg"
+  - attachments:
+      - filename: "Suspicion.jpg"
     title: "Jucika has a suspicion"
-  - filename: "SwimsuitFashion.jpg"
+  - attachments:
+      - filename: "SwimsuitFashion.jpg"
     title: "Jucika presents the new swimwear fashion"
     sensitive: true
-  - filename: "SwimsuitTryOn.jpg"
+  - attachments:
+      - filename: "SwimsuitTryOn.jpg"
     title: "Jucika tries on a bathing suit"
-  - filename: "TactfulWorker.jpg"
+  - attachments:
+      - filename: "TactfulWorker.jpg"
     title: "Jucika and the tactful road repairer"
-  - filename: "Tailor.jpg"
+  - attachments:
+      - filename: "Tailor.jpg"
     title: "Jucika the tailor"
-  - filename: "TakesAHike.jpg"
+  - attachments:
+      - filename: "TakesAHike.jpg"
     title: "Jucika goes on a hike"
-  - filename: "TargetJump.jpg"
+  - attachments:
+      - filename: "TargetJump.jpg"
     title: "Jucika and the target jump"
-  - filename: "Taxi.jpg"
+  - attachments:
+      - filename: "Taxi.jpg"
     title: "Jucika calls a taxi"
-  - filename: "Teamwork.jpg"
+  - attachments:
+      - filename: "Teamwork.jpg"
     title: "Jucika and women's cooperation"
-  - filename: "TelecisionMagic.jpg"
+  - attachments:
+      - filename: "TelecisionMagic.jpg"
     title: "Jucika and the magic of TV"
-  - filename: "Television.jpg"
+  - attachments:
+      - filename: "Television.jpg"
     title: "Jucika and the television"
     sensitive: true
-  - filename: "TemptingSummer.jpg"
+  - attachments:
+      - filename: "TemptingSummer.jpg"
     title: "Jucika and the seductive film"
-  - filename: "TheAbsoluteGentleman.jpg"
+  - attachments:
+      - filename: "TheAbsoluteGentleman.jpg"
     title: "Jucika and the absolutely polite man"
-  - filename: "Theatre2.jpg"
+  - attachments:
+      - filename: "Theatre2.jpg"
     title: "Jucika at the community theater"
-  - filename: "Theatre3.jpg"
+  - attachments:
+      - filename: "Theatre3.jpg"
     title: "Jucika in the theater"
-  - filename: "Theatre4.jpg"
+  - attachments:
+      - filename: "Theatre4.jpg"
     title: "Jucika and the theatrical success"
-  - filename: "Theatre.jpg"
+  - attachments:
+      - filename: "Theatre.jpg"
     title: "Jucika in the theater"
-  - filename: "TheatrePartner.jpg"
+  - attachments:
+      - filename: "TheatrePartner.jpg"
     title: "Jucika's theater partner"
-  - filename: "TheClientWhoSawTooManzJucikaComics.jpg"
+  - attachments:
+      - filename: "TheClientWhoSawTooManzJucikaComics.jpg"
     title: "The customer who has seen a lot of Jucika"
-  - filename: "TheOlympics.jpg"
+  - attachments:
+      - filename: "TheOlympics.jpg"
     title: "Jucika and the Olympics"
-  - filename: "TheSecretOFSuccess.jpg"
+  - attachments:
+      - filename: "TheSecretOFSuccess.jpg"
     title: "Jucika's success"
-  - filename: "TightSkirt.jpg"
+  - attachments:
+      - filename: "TightSkirt.jpg"
     title: "Jucika and the tight skirt"
-  - filename: "Timelapse.jpg"
+  - attachments:
+      - filename: "Timelapse.jpg"
     title: "Jucika over the years"
     sensitive: true
-  - filename: "ToBalaton.jpg"
+  - attachments:
+      - filename: "ToBalaton.jpg"
     title: "Jucika is heading to Balatona"
-  - filename: "tom-cat.jpg"
+  - attachments:
+      - filename: "tom-cat.jpg"
     title: "Jucika and the tomcats"
-  - filename: "Toothache.jpg"
+  - attachments:
+      - filename: "Toothache.jpg"
     title: "Jucika and the toothache"
-  - filename: "TourisSign.jpg"
+  - attachments:
+      - filename: "TourisSign.jpg"
     title: "Jucika and the tourist sign"
-  - filename: "Trainer.jpg"
+  - attachments:
+      - filename: "Trainer.jpg"
     title: "Jucika as a coach"
-  - filename: "Train.jpg"
+  - attachments:
+      - filename: "Train.jpg"
     title: "Jucika and the train"
-  - filename: "Trespassing.jpg"
+  - attachments:
+      - filename: "Trespassing.jpg"
     title: "Jucika is prohibited"
-  - filename: "TrialHeating.jpg"
+  - attachments:
+      - filename: "TrialHeating.jpg"
     title: "Jucika and the test heating"
-  - filename: "Umbrella.jpg"
+  - attachments:
+      - filename: "Umbrella.jpg"
     title: "Jucika and the alibi umbrella"
-  - filename: "UnexpectedGuest.jpg"
+  - attachments:
+      - filename: "UnexpectedGuest.jpg"
     title: "Jucika and the unexpected guest"
     sensitive: true
-  - filename: "Ungrateful.jpg"
+  - attachments:
+      - filename: "Ungrateful.jpg"
     title: "Jucika is ungrateful"
-  - filename: "Usher.jpg"
+  - attachments:
+      - filename: "Usher.jpg"
     title: "Jucika as an usher"
-  - filename: "Vacation2.jpg"
+  - attachments:
+      - filename: "Vacation2.jpg"
     title: "Jucika on vacation"
     sensitive: true
-  - filename: "Vacation.jpg"
+  - attachments:
+      - filename: "Vacation.jpg"
     title: "Jucika goes to bed"
-  - filename: "Vain.jpg"
+  - attachments:
+      - filename: "Vain.jpg"
     title: "Jucika is a bit vain"
-  - filename: "Vehicle.jpg"
-  - filename: "Ventillation.jpg"
+  - attachments:
+      - filename: "Vehicle.jpg"
+  - attachments:
+      - filename: "Ventillation.jpg"
     title: "Jucika and the ventilator"
-  - filename: "WaiterBro.jpg"
+  - attachments:
+      - filename: "WaiterBro.jpg"
     title: "Jucika and the discreet waiter"
-  - filename: "WaitingForGuest.jpg"
+  - attachments:
+      - filename: "WaitingForGuest.jpg"
     title: "Jucika invites a guest"
-  - filename: "WakeupCall.jpg"
+  - attachments:
+      - filename: "WakeupCall.jpg"
     title: "Jucika wakes you up"
-  - filename: "Wakeup.jpg"
+  - attachments:
+      - filename: "Wakeup.jpg"
     title: "Jucika wakes you up"
-  - filename: "WantsSomeFruit.jpg"
+  - attachments:
+      - filename: "WantsSomeFruit.jpg"
     title: "Jucika wants fruit"
-  - filename: "Washday2.jpg"
+  - attachments:
+      - filename: "Washday2.jpg"
     title: "Jucika and the big wash"
-  - filename: "Washday.jpg"
+  - attachments:
+      - filename: "Washday.jpg"
     title: "Jucika and the deep wash"
     sensitive: true
-  - filename: "Wave.jpg"
+  - attachments:
+      - filename: "Wave.jpg"
     title: "Jucika in the wave"
-  - filename: "Weather.jpg"
+  - attachments:
+      - filename: "Weather.jpg"
     title: "Jucika and the whimsical weather"
-  - filename: "WeddingNight.jpg"
+  - attachments:
+      - filename: "WeddingNight.jpg"
     title: "Jucika's wedding night"
-  - filename: "WellEquippedBus.jpg"
+  - attachments:
+      - filename: "WellEquippedBus.jpg"
     title: "Jucika and the well-equipped bus"
-  - filename: "WhatIsThisEven.jpg"
+  - attachments:
+      - filename: "WhatIsThisEven.jpg"
     title: "Jucika and the winter lake"
-  - filename: "Wind.jpg"
+  - attachments:
+      - filename: "Wind.jpg"
     title: "Jucika and the windstorm"
-  - filename: "WinningBull.jpg"
+  - attachments:
+      - filename: "WinningBull.jpg"
     title: "Jucika as a photojournalist"
-  - filename: "WinterCloth.jpg"
+  - attachments:
+      - filename: "WinterCloth.jpg"
     title: "Jucika and winter wear"
-  - filename: "Witness.jpg"
+  - attachments:
+      - filename: "Witness.jpg"
     title: "Jucika as a witness"
-  - filename: "WomansDay.jpg"
+  - attachments:
+      - filename: "WomansDay.jpg"
     title: "Jucika misunderstands"
-  - filename: "WomensDay.jpg"
+  - attachments:
+      - filename: "WomensDay.jpg"
     title: "Jucika is celebrating"
-  - filename: "WorkDiscipline.jpg"
+  - attachments:
+      - filename: "WorkDiscipline.jpg"
     title: "Jucika and work discipline"
-  - filename: "Workhours.jpg"
+  - attachments:
+      - filename: "Workhours.jpg"
     title: "Jucika keeps her working hours"
-  - filename: "WorkplaceHazard.jpg"
+  - attachments:
+      - filename: "WorkplaceHazard.jpg"
     title: "Jucika the workplace hazard"
-  - filename: "ZipperRepair.jpg"
+  - attachments:
+      - filename: "ZipperRepair.jpg"
     title: "Jucika and the zipper repair"

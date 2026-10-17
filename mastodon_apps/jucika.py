@@ -83,17 +83,19 @@ class Jucika(BaseMastodon):
         )
         return comic
 
-    def backoff_attachment(self, url, timeout=300):
+    def backoff_attachments(self, attachment_ids, timeout=300):
         begin = datetime.datetime.now()
         wait_secs = 1
-        while True:
+        while attachment_ids:
             self.logger.debug("Waiting {}s for attachment processing".format(wait_secs))
             time.sleep(wait_secs)
-            res = self.api(url, get_result=True)
-            if res.status_code == 200:
-                self.logger.debug("Attachment has processed")
-                return
-            self.logger.debug("Attachment has not yet processed (status code {})".format(res.status_code))
+            for attachment_id in attachment_ids.copy():
+                res = self.api("{}/api/v1/media/{}".format(self.url_base, attachment_id), get_result=True)
+                if res.status_code == 200:
+                    self.logger.debug("Attachment {} has processed".format(attachment_id))
+                    attachment_ids.remove(attachment_id)
+                else:
+                    self.logger.debug("Attachment {} has not yet processed (status code {})".format(attachment_id, res.status_code))
             if (datetime.datetime.now() - begin) >= datetime.timedelta(seconds=timeout):
                 raise TimeoutError("Timed out waiting for attachment processing")
             wait_secs *= 1.75
@@ -119,7 +121,7 @@ class Jucika(BaseMastodon):
             if comic.get("boost"):
                 desc = "Boost: {}".format(comic["boost"])
             else:
-                desc = "Post: {} - {}".format(comic["filename"], comic.get("title"))
+                desc = "Post: {}".format(comic.get("title"))
             return desc
 
         self.logger.info("Today ({}): {}".format(today, get_desc(comic)))
@@ -149,36 +151,45 @@ class Jucika(BaseMastodon):
             self.post_comic(comic)
 
     def post_comic(self, comic, in_reply_to_id=None, status_prefix=None, visibility=None):
-        f = pathlib.Path(self.config["image_dir"], comic["filename"])
-        fh = f.open(mode="rb")
-        data = {}
-        description = comic.get("description")
-        if description:
-            data["description"] = description
-        attachment_mime = mimetypes.guess_type(f.as_uri())[0]
-        attachment_filename = "attachment.{}".format(mimetypes.guess_extension(attachment_mime))
-        res = self.api(
-            "{}/api/v2/media".format(self.url_base),
-            data=data,
-            files={
-                "file": (attachment_filename, fh, attachment_mime),
-            },
-            method="POST",
-            get_result=True,
-        )
-        j = res.json()
-        attachment_id = j["id"]
-        if res.status_code == 202:
-            self.logger.debug("Attachment is still processing; checking status occasionally")
-            self.backoff_attachment("{}/api/v1/media/{}".format(self.url_base, attachment_id))
+        attachments = comic.get("attachments", [])
+        backoffs = []
+        attachment_ids = []
+        for attachment in attachments:
+            f = pathlib.Path(self.config["image_dir"], attachment["filename"])
+            fh = f.open(mode="rb")
+            data = {}
+            description = attachment.get("description")
+            if description:
+                data["description"] = description
+            attachment_mime = mimetypes.guess_type(f.as_uri())[0]
+            attachment_filename = "attachment.{}".format(mimetypes.guess_extension(attachment_mime))
+            res = self.api(
+                "{}/api/v2/media".format(self.url_base),
+                data=data,
+                files={
+                    "file": (attachment_filename, fh, attachment_mime),
+                },
+                method="POST",
+                get_result=True,
+            )
+            j = res.json()
+            attachment_id = j["id"]
+            attachment_ids.append(attachment_id)
+            if res.status_code == 202:
+                backoffs.append(attachment_id)
+
+        if backoffs:
+            self.logger.debug("Attachments are still processing; checking status occasionally")
+            self.backoff_attachments(backoffs)
 
         if visibility is None:
             visibility = self.config.get("visibility", "public")
         data = [
-            ("media_ids[]", attachment_id),
             ("sensitive", ("true" if comic.get("sensitive") else "false")),
             ("visibility", visibility),
         ]
+        for attachment_id in attachment_ids:
+            data.append(("media_ids[]", attachment_id))
         status = comic.get("title", "")
         if status_prefix:
             status = status_prefix + " " + status
