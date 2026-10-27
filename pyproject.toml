@@ -40,7 +40,7 @@ include = [
 [project.scripts]
 mastodon-app-eightfortyseven = "mastodon_apps.eightfortyseven:main"
 mastodon-app-fish = "mastodon_apps.fish:main"
-mastodon-app-jucika = "mastodon_apps.jucika:main"
+mastodon-app-randomposter = "mastodon_apps.randomposter:main"
 mastodon-app-printer = "mastodon_apps.printer:main"
 
 [tool.black]

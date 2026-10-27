@@ -1,7 +1,7 @@
 # SPDX-PackageName: mastodon-apps
 # SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
 # SPDX-PackageDownloadLocation: https://forge.colobox.com/rfinnie/mastodon-apps
-# SPDX-FileComment: Jucika Mastodon bot
+# SPDX-FileComment: Random poster Mastodon bot
 # SPDX-FileCopyrightText: © 2025 Ryan Finnie <ryan@finnie.org>
 # SPDX-License-Identifier: MPL-2.0
 
@@ -20,8 +20,8 @@ import dateutil.parser
 from .mastodon import BaseMastodon
 
 
-class Jucika(BaseMastodon):
-    name = "jucika"
+class RandomPoster(BaseMastodon):
+    name = "randomposter"
     calling_file = __file__
     listen = True
     re_strip_users = re.compile(r"^(\@[a-zA-Z0-9\.@\-_]+ +)+")
@@ -226,7 +226,7 @@ class Jucika(BaseMastodon):
 
 
 def main():
-    return Jucika().main()
+    return RandomPoster().main()
 
 
 if __name__ == "__main__":
