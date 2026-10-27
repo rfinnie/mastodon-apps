@@ -33,7 +33,7 @@ class RandomPoster(BaseMastodon):
 
     def add_app_args(self, parser):
         parser.add_argument("--daily", action="store_true", help="Daily cron mode")
-        parser.add_argument("--random", action="store_true", help="Truly random comic")
+        parser.add_argument("--random", action="store_true", help="Truly random post")
         parser.add_argument("--dry-run", action="store_true", help="Do not post")
         parser.add_argument("--datetime-override", help="Date/time override")
 
@@ -46,13 +46,13 @@ class RandomPoster(BaseMastodon):
         else:
             return zlib.crc32(str(seed).encode("UTF-8"))
 
-    def get_comics(self, get_generation):
+    def get_posts(self, get_generation):
         out = []
-        for comic in self.config["comics"]:
-            generation = comic.get("generation", 1)
+        for post in self.config["posts"]:
+            generation = post.get("generation", 1)
             if generation > get_generation:
                 continue
-            out.append(comic)
+            out.append(post)
         return out
 
     def get_generation(self, day):
@@ -62,26 +62,26 @@ class RandomPoster(BaseMastodon):
                 return g["generation"]
         return 1
 
-    def get_day_comic(self, today):
+    def get_day_post(self, today):
         day = (today - datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)).days
         generation = self.get_generation(day)
-        comics = self.get_comics(generation)
+        posts = self.get_posts(generation)
         base_seed = self.get_seed()
-        # Seed remains the same throughout the run of the comics,
+        # Seed remains the same throughout the run of the posts,
         # but changes for the next run
-        day_base = day - (day % len(comics))
+        day_base = day - (day % len(posts))
         seed = base_seed + day_base
         rand = random.Random()
         rand.seed(seed, version=2)
-        rand.shuffle(comics)
-        pos = day % len(comics)
-        comic = comics[pos]
+        rand.shuffle(posts)
+        pos = day % len(posts)
+        post = posts[pos]
         self.logger.debug(
             "{} is generation {}, {} base -> {} day; picked position {}/{} with seed {}".format(
-                today, generation, day_base, day, pos, len(comics), seed
+                today, generation, day_base, day, pos, len(posts), seed
             )
         )
-        return comic
+        return post
 
     def backoff_attachments(self, attachment_ids, timeout=300):
         begin = datetime.datetime.now()
@@ -111,32 +111,32 @@ class RandomPoster(BaseMastodon):
             today = datetime.datetime.now(tz=datetime.timezone.utc)
         tomorrow = today + datetime.timedelta(days=1)
         if self.args.random:
-            comic = random.choice(self.config["comics"])
-            next_comic = None
+            post = random.choice(self.config["posts"])
+            next_post = None
         else:
-            comic = self.get_day_comic(today)
-            next_comic = self.get_day_comic(tomorrow)
+            post = self.get_day_post(today)
+            next_post = self.get_day_post(tomorrow)
 
-        def get_desc(comic):
-            if comic.get("boost"):
-                desc = "Boost: {}".format(comic["boost"])
+        def get_desc(post):
+            if post.get("boost"):
+                desc = "Boost: {}".format(post["boost"])
             else:
-                desc = "Post: {}".format(comic.get("title"))
+                desc = "Post: {}".format(post.get("title"))
             return desc
 
-        self.logger.info("Today ({}): {}".format(today, get_desc(comic)))
-        if next_comic:
-            self.logger.info("Tomorrow ({}): {}".format(today, get_desc(next_comic)))
+        self.logger.info("Today ({}): {}".format(today, get_desc(post)))
+        if next_post:
+            self.logger.info("Tomorrow ({}): {}".format(today, get_desc(next_post)))
 
         if self.args.dry_run:
             return
 
-        if comic.get("boost"):
-            if "/" in comic["boost"]:
+        if post.get("boost"):
+            if "/" in post["boost"]:
                 # Allow full URL for posterity, but only needs the ID
-                boost_id = comic["boost"].split("/")[-1]
+                boost_id = post["boost"].split("/")[-1]
             else:
-                boost_id = str(comic["boost"])
+                boost_id = str(post["boost"])
             # "unreblog" is idempotent
             self.api(
                 "{}/api/v1/statuses/{}/unreblog".format(self.url_base, boost_id),
@@ -148,10 +148,10 @@ class RandomPoster(BaseMastodon):
             )
             return
         else:
-            self.post_comic(comic)
+            self.post_post(post)
 
-    def post_comic(self, comic, in_reply_to_id=None, status_prefix=None, visibility=None):
-        attachments = comic.get("attachments", [])
+    def post_post(self, post, in_reply_to_id=None, status_prefix=None, visibility=None):
+        attachments = post.get("attachments", [])
         backoffs = []
         attachment_ids = []
         for attachment in attachments:
@@ -185,12 +185,12 @@ class RandomPoster(BaseMastodon):
         if visibility is None:
             visibility = self.config.get("visibility", "public")
         data = [
-            ("sensitive", ("true" if comic.get("sensitive") else "false")),
+            ("sensitive", ("true" if post.get("sensitive") else "false")),
             ("visibility", visibility),
         ]
         for attachment_id in attachment_ids:
             data.append(("media_ids[]", attachment_id))
-        status = comic.get("title", "")
+        status = post.get("title", "")
         if status_prefix:
             status = status_prefix + " " + status
         status = status.strip()
@@ -211,9 +211,9 @@ class RandomPoster(BaseMastodon):
         post_text = self.re_strip_dots.sub("", post_text).strip()
         post_text = post_text.lower()
         if "random" in post_text or "please" in post_text or "give me" in post_text or "another comic" in post_text:
-            comic = random.choice(self.config["comics"])
-            self.post_comic(
-                comic,
+            post = random.choice(self.config["posts"])
+            self.post_post(
+                post,
                 in_reply_to_id=mention["status"]["id"],
                 status_prefix="@{}".format(mention["status"]["account"]["acct"]),
                 visibility="unlisted",

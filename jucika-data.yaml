@@ -9,7 +9,7 @@
 # image through Google Translate, sanity checking and cleaning up by
 # someone who doesn't understand Hungarian.
 ---
-comics:
+posts:
   - attachments:
       - filename: "6'2.jpg"
     title: "Jucika is having a ball"
