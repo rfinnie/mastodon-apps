@@ -9,6 +9,11 @@
 # image through Google Translate, sanity checking and cleaning up by
 # someone who doesn't understand Hungarian.
 ---
+mention_prompts:
+  - "random"
+  - "please"
+  - "give me"
+  - "another comic"
 posts:
   - attachments:
       - filename: "6'2.jpg"

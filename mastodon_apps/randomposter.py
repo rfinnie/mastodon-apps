@@ -210,7 +210,8 @@ class RandomPoster(BaseMastodon):
         post_text = self.re_strip_users.sub("", post_text).strip()
         post_text = self.re_strip_dots.sub("", post_text).strip()
         post_text = post_text.lower()
-        if "random" in post_text or "please" in post_text or "give me" in post_text or "another comic" in post_text:
+        prompts = self.config.get("mention_prompts", ["random", "please", "give me", "another"])
+        if any([prompt in post_text for prompt in prompts]):
             post = random.choice(self.config["posts"])
             self.post_post(
                 post,
