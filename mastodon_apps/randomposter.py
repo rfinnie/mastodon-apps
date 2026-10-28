@@ -121,7 +121,7 @@ class RandomPoster(BaseMastodon):
             if post.get("boost"):
                 desc = "Boost: {}".format(post["boost"])
             else:
-                desc = "Post: {}".format(post.get("title"))
+                desc = "Post: {}".format(post.get("status"))
             return desc
 
         self.logger.info("Today ({}): {}".format(today, get_desc(post)))
@@ -190,7 +190,7 @@ class RandomPoster(BaseMastodon):
         ]
         for attachment_id in attachment_ids:
             data.append(("media_ids[]", attachment_id))
-        status = post.get("title", "")
+        status = post.get("status", "")
         if status_prefix:
             status = status_prefix + " " + status
         status = status.strip()
