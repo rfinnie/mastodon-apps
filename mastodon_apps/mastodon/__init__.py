@@ -143,7 +143,7 @@ class BaseMastodon:
     def on_keepalive(self):
         pass
 
-    def api(self, url, method="GET", data=None, files=None, get_result=False, idempotency=None):
+    def api(self, url, method="GET", data=None, files=None, get_result=False, idempotency=None, params=None):
         headers = {
             "Authorization": "Bearer {}".format(self.config["bearer_token"]),
         }
@@ -167,6 +167,8 @@ class BaseMastodon:
             kwargs["data"] = data
         if files:
             kwargs["files"] = files
+        if params:
+            kwargs["params"] = params
         r = self.session.request(
             method,
             url,

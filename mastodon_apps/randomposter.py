@@ -128,15 +128,27 @@ class RandomPoster(BaseMastodon):
         if next_post:
             self.logger.info("Tomorrow ({}): {}".format(today, get_desc(next_post)))
 
+        if post.get("boost"):
+            if "/" in post["boost"]:
+                params = {
+                    "q": post["boost"],
+                    "type": "statuses",
+                    "resolve": "true",
+                    "limit": "1",
+                }
+                r = self.api(
+                    "{}/api/v2/search".format(self.url_base),
+                    params=params,
+                )
+                boost_id = r["statuses"][0]["id"]
+                self.logger.debug("Resolved {} to {}".format(post["boost"], boost_id))
+            else:
+                boost_id = str(post["boost"])
+
         if self.args.dry_run:
             return
 
         if post.get("boost"):
-            if "/" in post["boost"]:
-                # Allow full URL for posterity, but only needs the ID
-                boost_id = post["boost"].split("/")[-1]
-            else:
-                boost_id = str(post["boost"])
             # "unreblog" is idempotent
             self.api(
                 "{}/api/v1/statuses/{}/unreblog".format(self.url_base, boost_id),
