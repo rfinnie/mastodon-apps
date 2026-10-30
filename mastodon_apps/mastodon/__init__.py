@@ -148,7 +148,7 @@ class BaseMastodon:
             "Authorization": "Bearer {}".format(self.config["bearer_token"]),
         }
         if idempotency is None:
-            idempotency = method == "post"
+            idempotency = method.lower() == "post"
         if idempotency:
             # Note that this is not cryptographically safe, just to prevent
             # accidental replays.
